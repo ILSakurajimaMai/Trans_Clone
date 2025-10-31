@@ -132,23 +132,53 @@ class CSVTranslatorMainWindow(QMainWindow):
         self.setup_main_tab()
         self.tab_widget.addTab(self.main_tab, "📄 Main Workspace")
 
-        # Tab 2: API Configuration
-        from ui.components.api_config_panel import APIConfigPanel
-        self.api_config_panel = APIConfigPanel()
-        self.api_config_panel.api_key_changed.connect(self.on_api_key_configured)
-        self.tab_widget.addTab(self.api_config_panel, "🔑 API Configuration")
+        # Tab 2: API Configuration (lazy import to avoid QWidget before QApplication)
+        try:
+            from ui.components.api_config_panel import APIConfigPanel
+            self.api_config_panel = APIConfigPanel()
+            self.api_config_panel.api_key_changed.connect(self.on_api_key_configured)
+            self.tab_widget.addTab(self.api_config_panel, "🔑 API Configuration")
+        except Exception as e:
+            # Create placeholder with error message
+            placeholder = QWidget()
+            placeholder_layout = QVBoxLayout(placeholder)
+            from PyQt6.QtWidgets import QLabel
+            error_label = QLabel(
+                f"<h3>⚠️ Error loading API Configuration</h3>"
+                f"<p><b>Error:</b> {str(e)}</p>"
+                f"<p>Please install missing dependencies:</p>"
+                f"<code>pip install cryptography requests</code>"
+            )
+            error_label.setWordWrap(True)
+            placeholder_layout.addWidget(error_label)
+            placeholder_layout.addStretch()
+            self.tab_widget.addTab(placeholder, "🔑 API Configuration")
+            self.api_config_panel = None
+            print(f"Warning: Could not load API Configuration panel: {e}")
 
         # Tab 3: System Instructions
-        from ui.components.instruction_panel import InstructionPanel
-        self.instruction_panel = InstructionPanel()
-        self.instruction_panel.instruction_changed.connect(self.on_instruction_changed)
-        self.tab_widget.addTab(self.instruction_panel, "📝 Instructions")
+        try:
+            from ui.components.instruction_panel import InstructionPanel
+            self.instruction_panel = InstructionPanel()
+            self.instruction_panel.instruction_changed.connect(self.on_instruction_changed)
+            self.tab_widget.addTab(self.instruction_panel, "📝 Instructions")
+        except Exception as e:
+            placeholder = QWidget()
+            self.tab_widget.addTab(placeholder, "📝 Instructions")
+            self.instruction_panel = None
+            print(f"Warning: Could not load Instructions panel: {e}")
 
         # Tab 4: Summary
-        from ui.components.summary_panel import SummaryPanel
-        self.summary_panel = SummaryPanel()
-        self.summary_panel.summary_requested.connect(self.on_summary_requested)
-        self.tab_widget.addTab(self.summary_panel, "📊 Summary")
+        try:
+            from ui.components.summary_panel import SummaryPanel
+            self.summary_panel = SummaryPanel()
+            self.summary_panel.summary_requested.connect(self.on_summary_requested)
+            self.tab_widget.addTab(self.summary_panel, "📊 Summary")
+        except Exception as e:
+            placeholder = QWidget()
+            self.tab_widget.addTab(placeholder, "📊 Summary")
+            self.summary_panel = None
+            print(f"Warning: Could not load Summary panel: {e}")
 
         # Setup menu bar after all components are created
         self.setup_menu_bar()
@@ -412,26 +442,31 @@ class CSVTranslatorMainWindow(QMainWindow):
     def setup_api_keys(self):
         """Setup API keys - now handled by API config panel"""
         # Load API keys from API service manager if available
-        if hasattr(self, 'api_config_panel'):
-            api_manager = self.api_config_panel.get_api_manager()
+        if hasattr(self, 'api_config_panel') and self.api_config_panel is not None:
+            try:
+                api_manager = self.api_config_panel.get_api_manager()
 
-            # Get all services with API keys
-            for service in api_manager.get_all_services():
-                if api_manager.has_api_key(service.id):
-                    api_key = api_manager.get_api_key(service.id)
+                # Get all services with API keys
+                for service in api_manager.get_all_services():
+                    if api_manager.has_api_key(service.id):
+                        api_key = api_manager.get_api_key(service.id)
 
-                    # Set in translation engine (map to provider)
-                    if service.provider_type.value in [p.value for p in ModelProvider]:
-                        provider = ModelProvider(service.provider_type.value)
-                        self.translation_engine.set_api_key(provider, api_key)
+                        # Set in translation engine (map to provider)
+                        if service.provider_type.value in [p.value for p in ModelProvider]:
+                            provider = ModelProvider(service.provider_type.value)
+                            self.translation_engine.set_api_key(provider, api_key)
 
-                        # Store in app state
-                        self.app_state.api_keys[provider.value] = api_key
+                            # Store in app state
+                            self.app_state.api_keys[provider.value] = api_key
 
-            if self.app_state.api_keys:
-                self.log(f"Loaded {len(self.app_state.api_keys)} API key(s)")
-            else:
-                self.log("No API keys configured. Go to API Configuration tab to set up.")
+                if self.app_state.api_keys:
+                    self.log(f"Loaded {len(self.app_state.api_keys)} API key(s)")
+                else:
+                    self.log("No API keys configured. Go to API Configuration tab to set up.")
+            except Exception as e:
+                self.log(f"Warning: Could not load API keys: {e}")
+        else:
+            self.log("API Configuration panel not available. Please install cryptography: pip install cryptography requests")
 
     def setup_storage_managers(self):
         """Setup storage managers and connections"""
@@ -1732,18 +1767,24 @@ class CSVTranslatorMainWindow(QMainWindow):
 
     def on_api_key_configured(self, service_id: str, api_key: str):
         """Handle API key configuration from API config panel"""
-        # Get service info
-        api_manager = self.api_config_panel.get_api_manager()
-        service = api_manager.get_service(service_id)
+        if not self.api_config_panel:
+            return
 
-        if service:
-            # Set in translation engine
-            if service.provider_type.value in [p.value for p in ModelProvider]:
-                provider = ModelProvider(service.provider_type.value)
-                self.translation_engine.set_api_key(provider, api_key)
-                self.app_state.api_keys[provider.value] = api_key
+        try:
+            # Get service info
+            api_manager = self.api_config_panel.get_api_manager()
+            service = api_manager.get_service(service_id)
 
-            self.log(f"API key configured for {service.name}")
+            if service:
+                # Set in translation engine
+                if service.provider_type.value in [p.value for p in ModelProvider]:
+                    provider = ModelProvider(service.provider_type.value)
+                    self.translation_engine.set_api_key(provider, api_key)
+                    self.app_state.api_keys[provider.value] = api_key
+
+                self.log(f"API key configured for {service.name}")
+        except Exception as e:
+            self.log(f"Error configuring API key: {e}")
 
     def on_instruction_changed(self, instruction_type: str, content: str):
         """Handle system instruction changes"""
