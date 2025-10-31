@@ -11,7 +11,7 @@ from datetime import datetime
 import base64
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import hashlib
 
 from models.api_models import (
@@ -48,7 +48,7 @@ class EncryptionManager:
     def _init_fernet(self) -> Fernet:
         """Initialize Fernet cipher"""
         # Derive key from password
-        kdf = PBKDF2(
+        kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
             salt=b'csv_translator_salt',  # In production, use random salt
