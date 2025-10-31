@@ -817,11 +817,20 @@ class CSVTranslatorMainWindow(QMainWindow):
                 return
 
             # Auto-generate and set history file path
-            history_path = self.file_manager.ensure_history_file()
-            if history_path:
-                self.app_state.history_file = history_path
-                self.config_panel.set_history_file(history_path)
-                self.log(f"Using history file: {Path(history_path).name}")
+            if self.app_state.csv_files:
+                current_file = self.app_state.csv_files[
+                    self.app_state.current_file_index
+                ]
+                file_name = (
+                    current_file.name
+                    if hasattr(current_file, "name")
+                    else Path(current_file).name
+                )
+                history_path = self.file_manager.ensure_history_file(file_name)
+                if history_path:
+                    self.app_state.history_file = history_path
+                    self.config_panel.set_history_file(history_path)
+                    self.log(f"Using history file: {Path(history_path).name}")
 
             file_count = self.file_manager.get_file_count()
             if file_count > 0:

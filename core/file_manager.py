@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import asyncio
 import aiofiles
+import json
 from typing import List, Optional, Tuple, Dict, Any, AsyncGenerator
 from pathlib import Path
 import time
@@ -409,24 +410,38 @@ class OptimizedFileManager:
             "cache_hit_rate": self._get_cache_hit_rate(),
             "error_rate": self._get_error_rate(),
         }
+        
+    def get_file_count(self) -> int:
+        """Get total number of CSV files loaded"""
+        return len(self.csv_files) if self.csv_files else 0
 
     def _get_memory_usage(self) -> Dict[str, Any]:
         """Get current memory usage"""
-        import psutil
-
-        process = psutil.Process()
-        memory_info = process.memory_info()
-
-        return {
-            "rss": memory_info.rss,
-            "vms": memory_info.vms,
-            "percent": process.memory_percent(),
+        memory_info = {
+            "rss": 0,
+            "vms": 0,
+            "percent": 0,
             "dataframe_size": (
                 self.current_dataframe.memory_usage(deep=True).sum()
                 if self.current_dataframe is not None
                 else 0
             ),
         }
+        
+        try:
+            import psutil
+            process = psutil.Process()
+            process_memory = process.memory_info()
+            memory_info.update({
+                "rss": process_memory.rss,
+                "vms": process_memory.vms,
+                "percent": process.memory_percent(),
+            })
+        except ImportError:
+            # psutil not available, using basic memory info
+            pass
+            
+        return memory_info
 
     def _get_cache_hit_rate(self) -> float:
         """Calculate cache hit rate (placeholder)"""
@@ -443,6 +458,31 @@ class OptimizedFileManager:
         """Cleanup resources"""
         if self.executor:
             self.executor.shutdown(wait=True)
+            
+    def ensure_history_file(self, file_name: str) -> str:
+        """Ensure history file exists for a given CSV file
+        
+        Args:
+            file_name: Name of the CSV file
+        
+        Returns:
+            Path to history file
+        """
+        try:
+            # Get base name without extension
+            base_name = file_name.rsplit('.', 1)[0]
+            history_file = f"history_{base_name}.json"
+            
+            # Create history file if it doesn't exist
+            if not os.path.exists(history_file):
+                with open(history_file, 'w', encoding='utf-8') as f:
+                    json.dump({"messages": []}, f)
+            
+            return history_file
+            
+        except Exception as e:
+            self.logger.error(f"Error ensuring history file: {e}")
+            return ""
 
     # Synchronous wrapper methods for backward compatibility
     def set_input_directory(self, directory: str) -> bool:

@@ -135,6 +135,7 @@ class CSVTranslatorMainWindow(QMainWindow):
         # Tab 2: API Configuration (lazy import to avoid QWidget before QApplication)
         try:
             from ui.components.api_config_panel import APIConfigPanel
+
             self.api_config_panel = APIConfigPanel()
             self.api_config_panel.api_key_changed.connect(self.on_api_key_configured)
             self.tab_widget.addTab(self.api_config_panel, "🔑 API Configuration")
@@ -143,6 +144,7 @@ class CSVTranslatorMainWindow(QMainWindow):
             placeholder = QWidget()
             placeholder_layout = QVBoxLayout(placeholder)
             from PyQt6.QtWidgets import QLabel
+
             error_label = QLabel(
                 f"<h3>⚠️ Error loading API Configuration</h3>"
                 f"<p><b>Error:</b> {str(e)}</p>"
@@ -159,8 +161,11 @@ class CSVTranslatorMainWindow(QMainWindow):
         # Tab 3: System Instructions
         try:
             from ui.components.instruction_panel import InstructionPanel
+
             self.instruction_panel = InstructionPanel()
-            self.instruction_panel.instruction_changed.connect(self.on_instruction_changed)
+            self.instruction_panel.instruction_changed.connect(
+                self.on_instruction_changed
+            )
             self.tab_widget.addTab(self.instruction_panel, "📝 Instructions")
         except Exception as e:
             placeholder = QWidget()
@@ -171,6 +176,7 @@ class CSVTranslatorMainWindow(QMainWindow):
         # Tab 4: Summary
         try:
             from ui.components.summary_panel import SummaryPanel
+
             self.summary_panel = SummaryPanel()
             self.summary_panel.summary_requested.connect(self.on_summary_requested)
             self.tab_widget.addTab(self.summary_panel, "📊 Summary")
@@ -442,7 +448,7 @@ class CSVTranslatorMainWindow(QMainWindow):
     def setup_api_keys(self):
         """Setup API keys - now handled by API config panel"""
         # Load API keys from API service manager if available
-        if hasattr(self, 'api_config_panel') and self.api_config_panel is not None:
+        if hasattr(self, "api_config_panel") and self.api_config_panel is not None:
             try:
                 api_manager = self.api_config_panel.get_api_manager()
 
@@ -452,7 +458,9 @@ class CSVTranslatorMainWindow(QMainWindow):
                         api_key = api_manager.get_api_key(service.id)
 
                         # Set in translation engine (map to provider)
-                        if service.provider_type.value in [p.value for p in ModelProvider]:
+                        if service.provider_type.value in [
+                            p.value for p in ModelProvider
+                        ]:
                             provider = ModelProvider(service.provider_type.value)
                             self.translation_engine.set_api_key(provider, api_key)
 
@@ -462,11 +470,15 @@ class CSVTranslatorMainWindow(QMainWindow):
                 if self.app_state.api_keys:
                     self.log(f"Loaded {len(self.app_state.api_keys)} API key(s)")
                 else:
-                    self.log("No API keys configured. Go to API Configuration tab to set up.")
+                    self.log(
+                        "No API keys configured. Go to API Configuration tab to set up."
+                    )
             except Exception as e:
                 self.log(f"Warning: Could not load API keys: {e}")
         else:
-            self.log("API Configuration panel not available. Please install cryptography: pip install cryptography requests")
+            self.log(
+                "API Configuration panel not available. Please install cryptography: pip install cryptography requests"
+            )
 
     def setup_storage_managers(self):
         """Setup storage managers and connections"""
@@ -885,11 +897,20 @@ class CSVTranslatorMainWindow(QMainWindow):
                 return
 
             # Auto-generate and set history file path
-            history_path = self.file_manager.ensure_history_file()
-            if history_path:
-                self.app_state.history_file = history_path
-                self.config_panel.set_history_file(history_path)
-                self.log(f"Using history file: {Path(history_path).name}")
+            if self.app_state.csv_files:
+                current_file = self.app_state.csv_files[
+                    self.app_state.current_file_index
+                ]
+                file_name = (
+                    current_file.name
+                    if hasattr(current_file, "name")
+                    else Path(current_file).name
+                )
+                history_path = self.file_manager.ensure_history_file(file_name)
+                if history_path:
+                    self.app_state.history_file = history_path
+                    self.config_panel.set_history_file(history_path)
+                    self.log(f"Using history file: {Path(history_path).name}")
 
             file_count = self.file_manager.get_file_count()
             if file_count > 0:
@@ -1795,7 +1816,9 @@ class CSVTranslatorMainWindow(QMainWindow):
             self.app_state.summary_instruction = content
             self.log("Summary instruction updated")
 
-    def on_summary_requested(self, system_instruction: str, context_files: list, config: dict):
+    def on_summary_requested(
+        self, system_instruction: str, context_files: list, config: dict
+    ):
         """Handle summary request from summary panel"""
         self.log("Starting summary generation...")
 
@@ -1807,7 +1830,7 @@ class CSVTranslatorMainWindow(QMainWindow):
             f"Summary generation requested.\n\n"
             f"System instruction: {len(system_instruction)} chars\n"
             f"Context files: {len(context_files)}\n"
-            f"This feature will be implemented next."
+            f"This feature will be implemented next.",
         )
 
     def translate_selected_rows(self, use_context: bool):
@@ -1821,7 +1844,9 @@ class CSVTranslatorMainWindow(QMainWindow):
         # Get unique selected rows
         selected_rows = sorted(set(index.row() for index in selected_indexes))
 
-        self.log(f"Translating {len(selected_rows)} selected rows (context: {use_context})...")
+        self.log(
+            f"Translating {len(selected_rows)} selected rows (context: {use_context})..."
+        )
 
         if use_context:
             # Show context file selection dialog
@@ -1842,7 +1867,7 @@ class CSVTranslatorMainWindow(QMainWindow):
                     "Translation",
                     f"Translation with context will be implemented.\n\n"
                     f"Selected rows: {len(selected_rows)}\n"
-                    f"Context files: {len(context_files)}"
+                    f"Context files: {len(context_files)}",
                 )
         else:
             # Translate without context
@@ -1852,7 +1877,7 @@ class CSVTranslatorMainWindow(QMainWindow):
                 self,
                 "Translation",
                 f"Translation without context will be implemented.\n\n"
-                f"Selected rows: {len(selected_rows)}"
+                f"Selected rows: {len(selected_rows)}",
             )
 
     def log(self, message: str):
