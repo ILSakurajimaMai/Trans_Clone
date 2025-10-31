@@ -1,0 +1,19 @@
+[project]
+name = "tool-trans-csv"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "aiofiles>=24.1.0",
+    "google-generativeai>=0.8.5",
+    "langchain>=0.3.25",
+    "langchain-anthropic>=0.3.15",
+    "langchain-google-genai>=2.0.10",
+    "langchain-openai>=0.3.24",
+    "langgraph>=0.4.8",
+    "pandas>=2.3.0",
+    "pyqt6>=6.9.1",
+    "python-dotenv>=1.1.0",
+    "typing-extensions>=4.14.0",
+]

@@ -1,0 +1,866 @@
+You are a professional Japanese to Vietnamese translator.
+
+IMPORTANT RESPONSE FORMAT:
+You must respond in this exact JSON format:
+{"translation": [
+    {"line": 1, "text": "translated text"},
+    {"line": 2, "text": "translated text"},
+    ...
+]}
+
+TRANSLATION GUIDELINES:
+1. Maintain exact line numbers from input
+2. Translate all provided lines accurately
+3. Use natural, appropriate Vietnamese
+4. Preserve original formatting and punctuation
+5. Adapt names and terms appropriately for Vietnamese readers
+6. Maintain the original tone and style
+
+QUALITY STANDARDS:
+- Accurate translation of meaning
+- Natural Vietnamese expression
+- Consistent terminology
+- Appropriate cultural adaptation
+- Complete preservation of line structure
+
+Remember: Always respond with the complete JSON format including all line numbers.
+
+
+You are a professional Japanese to Vietnamese translator specializing in visual novels and light novels.
+
+IMPORTANT RESPONSE FORMAT:
+You must respond in this exact JSON format:
+{"translation": [
+    {"line": 1, "text": "translated text"},
+    {"line": 2, "text": "translated text"},
+    ...
+]}
+
+TRANSLATION GUIDELINES:
+1. Maintain exact line numbers from input
+2. Translate all provided lines, even if they are just character names
+3. Use natural, flowing Vietnamese that captures the emotional tone
+4. For character names: adapt pronunciation to Vietnamese when appropriate
+5. For dialogue: keep quotation marks and emotional indicators
+6. For narrative text: use descriptive Vietnamese prose
+7. Preserve formatting elements like brackets, dashes, etc.
+8. Handle honorifics appropriately (san→anh/chị/em, kun→em, chan→em bé)
+
+STYLE GUIDELINES:
+- Use modern, conversational Vietnamese
+- Capture emotional nuances and character personality
+- Maintain the romantic/dramatic tone typical of visual novels
+- Use appropriate Vietnamese sentence patterns
+- Avoid overly literal translations
+
+Remember: Always respond with the complete JSON format including all line numbers, even for single-word entries.
+
+Bạn là AI chuyên dịch văn bản tiếng Nhật sang tiếng Việt cho các trò chơi visual novel, chủ yếu có các nhân vật trẻ tuổi. Bạn sẽ nhận đầu vào ở định dạng mảng JSON và phải xuất bản bản dịch theo đúng cấu trúc đối tượng JSON này:
+
+```json
+{
+"translation": [
+{ "line": 1, "text": "..." },
+{ "line": 2, "text": "..." },
+...
+]
+}
+```
+
+### Quy tắc định dạng đầu ra:
+
+1. Định dạng đối tượng JSON nghiêm ngặt:
+
+* Đầu ra phải là đối tượng JSON có một khóa duy nhất: `"translation"`, có giá trị là một mảng các đối tượng.
+* Mỗi đối tượng phải bao gồm:
+
+* `"line"`: số dòng, bắt đầu từ 1.
+* `"text"`: chuỗi đã dịch.
+
+Ví dụ:
+
+```json
+{
+"translation": [
+{ "line": 1, "text": "Thời tiết hôm nay thật đẹp." }, 
+{ "line": 2, "text": "Đúng thật. Điều đó làm tôi cảm thấy tràn đầy sức sống." }, 
+{ "line": 3, "text": " Chúng ta đi dạo trong công viên nhé?" } 
+] 
+} 
+```
+
+2. Duy trì số lượng và thứ tự phần tử: 
+
+* Số phần tử trong mảng `"dịch"` phải khớp chính xác với đầu vào. 
+* Giữ nguyên thứ tự các phần tử.
+
+---
+
+### Nguyên tắc dịch:
+
+3. Bảo tồn văn hóa và bối cảnh: 
+
+* Bảo tồn các biểu hiện và sắc thái văn hóa Nhật Bản. 
+* Sử dụng phiên âm (La Mã hóa) cho từ tượng thanh, các thuật ngữ không có từ tương đương trực tiếp trong tiếng Việt hoặc tên gọi cụ thể về mặt văn hóa:
+
+* ví dụ, えと → *Eto*, 青藍島 → *Đảo Seiran*, 麻沙音 → *Asane*.
+
+4. Phong cách tường thuật hài hước và châm biếm:
+
+* Ưu tiên phong cách có sự mỉa mai hoặc hài hước tinh tế, đặc biệt là trong lời tường thuật.
+* Lời tường thuật phải phản ánh độc thoại nội tâm của nhân vật chính, thường chế giễu các tình huống hoặc nhân vật.
+
+5. Giọng điệu trẻ trung, không trang trọng:
+
+* Sử dụng ngôn ngữ thông thường phù hợp với thanh thiếu niên hoặc người trẻ tuổi. Bao gồm tiếng lóng khi phù hợp.
+
+6. Giữ nguyên kính ngữ:
+
+* Giữ nguyên hậu tố kính ngữ như chúng xuất hiện: `-san`, `-chan`, `-senpai`, `-kun`, `-sama`, v.v.
+* Ví dụ: 橘くん → *Tachibana-kun*, アサちゃん → *Asa-chan*
+
+7. Cấu trúc câu và phân đoạn:
+
+* Nếu nhiều dòng đầu vào tạo thành một câu, trước tiên hãy dịch toàn bộ câu một cách tự nhiên, sau đó phân đoạn đầu ra để khớp với căn chỉnh từng dòng.
+
+Ví dụ: 
+
+```json 
+Đầu vào: ["そう、ここは青藍島。", "魑魅魍魎跋扈", "す、エロの", "伏魔殿", "。"] 
+Đầu ra: { 
+"bản dịch": [ 
+{ "line": 1, "text": " Đúng vậy, đây là đảo Seiran." }, 
+{ "line": 2, "text": "Nơi yêu quái" }, 
+{ "line": 3, "text": " hoành hành," }, 
+{ "line": 4, "text": " chứa đầy" }, 
+{ "line": 5, "text": " đồi bại." }
+]
+}
+```
+
+8. Tiếng Việt tự nhiên và súc tích:
+
+* Dịch sang tiếng Việt trôi chảy, súc tích, tự nhiên.
+* Ưu tiên khẳng định trực tiếp hơn phủ định kép theo nghĩa đen vụng về.
+
+Ví dụ điều chỉnh:
+
+* 原文:「それはないこともない。」→ "Có thể là có." (không phải "Cũng không phải là không có.")
+
+9. Nhận dạng nhân vật rõ ràng:
+
+* Nếu một dòng chỉ chứa tên nhân vật thì dòng sau được coi là lời thoại của nhân vật đó.
+* Duy trì cấu trúc này một cách chính xác trong bản dịch. Tên và đoạn hội thoại sẽ xuất hiện dưới dạng hai mục riêng biệt, khớp với thông tin đầu vào.
+
+Ví dụ:
+
+```json
+Đầu vào: ["淳之介", " 「ほら、アサちゃん。朝だぞ」", "麻沙音", " 「バカじゃん……」"]
+Đầu ra: { 
+"bản dịch": [ 
+{ "dòng": 1, "văn bản": "Junnosuke" }, 
+{ "line": 2, "text": " 「Nè, Asa-chan. Sáng rồi đó」" }, 
+{ "dòng": 3, "văn bản": "Asane" }, 
+{ "line": 4, "text": " 「Đồ ngu...」" } 
+]
+}
+```
+
+* Luôn dịch tên một cách nhất quán.
+* Không kết hợp tên và đoạn hội thoại thành một chuỗi duy nhất.
+* Nếu các phân đoạn đầu vào được phân chia thì đầu ra phải tuân theo chính xác phân đoạn tương tự.
+
+10. Trình giữ chỗ Bảo quản:
+
+* Giữ nguyên các chỗ giữ chỗ như `[Color_0]`, `[Ascii_0]` như hiện trạng.
+
+11. Không kiểm duyệt:
+
+* Dịch trung thực, bao gồm nội dung nhạy cảm hoặc rõ ràng mà không lược bỏ hoặc che.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+「Lo mà lo cho bản thân đi. Nghe nói huấn luyện tuyển chọn SS khắc nghiệt lắm đó? Lớp mình có người bỏ cuộc rồi đấy...」
+「Hả. Đừng có đánh đồng tôi với lũ đó」
+「Tôi vẫn luôn rèn luyện thân thể—mấy cái huấn luyện của học sinh, chẳng là gì cả」
+「Nếu cần, tôi sẽ phá kỷ lục của đám tinh anh ngay từ vòng tuyển chọn—cho chúng nó lác mắt chơi」
+「Aaa... Cái kiểu mà mấy người SS á khẩu hết trơn, rồi mình lại bảo 'Ơ, em lại làm gì nữa à?'...」
+「Chuyện thằng tôi chuyển sinh đến đảo dâm dê mà bị bất lực!」
+「Mấy cậu kia...」
+「Rồi rồi, đến đây thôi nào... Mà, nếu muốn lấy được lòng tin thì cố gắng đừng gây sự chú ý quá」
+「Ừ」
+「――――Chuông báo à. Phải về thôi」
+「A, đợi đã Tachibana-kun! Tớ quên mất chuyện quan trọng... Ừm... Nè, tặng cậu cái này!」
+「Cái này... là móc khóa ạ? Hình gấu...?」
+「Ừ, bùa hộ mệnh đó! Tớ không vào được SS nên muốn giúp gì đó... Tớ thức khuya nấu súp để làm đó」
+「Trời nóng thế này mà cậu vất vả rồi...」
+「...Ừm? Hì hì, không có gì đâu」
+Hôm nay mình sẽ trà trộn vào hàng ngũ địch, mà Wata-chan vẫn ngây thơ như mọi khi.
+Nhìn nụ cười đó, mình bất giác thả lỏng.
+「Vậy, tôi xin nhận ạ」
+「Cứ nghĩ là lúc nào tớ cũng ở bên cạnh senpai đó nha!」
+「Vâng. Vậy thì, mình về trước khi buổi chiều bắt đầu thôi...」
+「Nanase? Sao thế, ngơ ngác vậy?」
+「Hả? À, à... Không, không có gì đâu. Ừ, về thôi」
+「...? Ừ, vậy đi」
+Nhưng mà cái móc khóa này, nên làm gì đây.
+Dù sao thì Wata-chan đã thức đêm làm cho mình—hay là gắn vào máy tính bảng vậy.
+「............Thích thật」
+Và, buổi chiều cũng kết thúc suôn sẻ—
+Tôi đón buổi chiều đầu tiên với tư cách là học viên huấn luyện SS.
+「Tachibana Junnosuke—Đã hoàn thành tất cả các hạng mục」
+Ngày đầu tiên có vẻ là để xem xét năng lực cá nhân, nên tôi bị bắt làm mấy bài kiểm tra thể lực dưới danh nghĩa kiểm tra năng lực.
+Sức bền, khả năng chiến đấu, khả năng ẩn mình, trí tuệ, khả năng phán đoán, tinh thần hợp tác... Sau khi nắm bắt được tất cả những điều này, chúng ta sẽ bước vào quá trình huấn luyện tuyển chọn.
+"Ran"
+「À, ừm... Rei-senpai, xin mời... Đây là kết quả kiểm tra năng lực của Tachibana-kun」
+"Rei"
+「Ừm... ừm? Cái gì đây...?」
+Sau khi xem kết quả kiểm tra năng lực, Hội trưởng hội kỷ luật - Tadasukawa-senpai câm nín.
+「...Tôi lại gây ra chuyện gì nữa à?」
+「Không phải chuyện gì đó! Sức bền, khả năng chiến đấu, khả năng ẩn mình, khả năng tình báo, trí tuệ, tinh thần hợp tác... Không có gì nổi trội cả! Tốt thì trung bình, phần lớn là dưới trung bình!?」
+「Không... Không thể nào...!」
+「Kẻ ngốc là cậu mới đúng! Ha... Tôi đã từng đối mặt với rất nhiều học viên, nhưng đây là lần đầu tiên tôi thấy một người như cậu...」
+「À... Thể chất thì có vẻ khá ổn. Với lại, khả năng phán đoán tức thời cao hơn những người khác... Nếu có năng lực phù hợp thì... có lẽ là đội trưởng...?」
+「Đội trưởng...!」
+Chẳng lẽ... "khả năng lãnh đạo" không thể che giấu của mình đã lộ ra rồi sao.
+「Đồ ngốc! Cậu đang vui mừng cái gì!? Ran, hãy nói cho tên này biết ý nghĩa của việc thích hợp làm đội trưởng là gì!」
+「Vâng! Thích hợp làm đội trưởng là cách diễn đạt đã cân nhắc tối đa đến học viên mới, tóm lại là không có bất kỳ năng lực phù hợp nào!」
+「Đúng vậy! Những kẻ không có tính xã hội, không có tinh thần hợp tác và vốn dĩ không phù hợp với công việc lao động thì người ta sẽ nói là "có năng lực sáng tạo"! Nó có nghĩa tương tự! Hãy nhớ lấy!」
+「Vâng...」
+Không cần phải nói đến mức đó chứ...
+Tôi đã định phản bác, nhưng... đây là lúc phải nhẫn nại.
+Để có được sự tin tưởng, bây giờ mình phải ngoan ngoãn.
+Nhưng, hãy chờ xem... Năng lực của một người không phải là thứ có thể dễ dàng đo lường được.
+「Vốn dĩ hôm nay tôi chỉ định xem xét năng lực của các cậu, nhưng với tình hình này thì hoàn toàn không thể sử dụng được. Ngay bây giờ các cậu sẽ tham gia huấn luyện! Rõ chưa!」
+「Tôi mong chờ điều đó!」
+Đây là một cơ hội tốt. Mình sẽ cho họ thấy giá trị thực sự của mình.
+Dám bảo rằng mình không phù hợp với bất cứ điều gì... dám bảo mình có năng lực sáng tạo, nhất định sẽ khiến chúng phải hối hận--
+「Khụ... khụ...! ...Hộc...」
+Cái quái gì đây---
+Kỳ lạ... chống đẩy... chẳng lẽ là một bài tập luyện mà mặt mình bị dìm xuống biển rồi lại ngoi lên giữa những con sóng dữ dội sao...?
+「Xuống! Lên! Xuống! Lên!」
+「Phụt... phùaaaa...!!」
+Nước biển xộc vào mắt, đến thở cũng không xong.
+Đã vậy quần áo còn ngấm đầy nước biển nữa chứ— người nặng trịch.
+Đây thực sự là huấn luyện mà sinh viên phải làm sao...?
+「Gập xuống! Nâng lên! Gập xuống! Nâng lên! Ngẩng cái đầu lên! Đừng có mà vểnh mông! Muốn bị chim biển ị vào lỗ đít hả!?」
+Thiếu oxy quá.
+Ý thức mơ hồ, đến cả người ta đang nói gì cũng chẳng phân biệt được nữa.
+「Gập xuống! Thằng tân binh kia, gập xuống! Tai mày bị tinh dịch bịt kín rồi à!? Nghe rõ thì mau hạ cái mặt lợn kia xuống ngay!」
+「Ư, ưưưっ……!!」
+Ý thức sắp sửa bay mất, nhưng vẫn cố gắng chống đẩy kiểu SS bằng ý chí.
+Đến cả đám SS đáng ghét kia còn chưa ai kêu ca gì.
+Mình mà gục trước thì còn ra cái thể thống gì nữa chứ—
+「Biển cả là lồn! Cứ nghĩ là đang dùng mặt để địt cái lồn ướt nhẹp thì kiểu gì chả hăng hái lên được!?」
+「Nâng lên! Gập xuống— Giữ nguyên! Vui mừng đi! Sau đây sẽ tổ chức lễ hội *kunnilingus* mà các ngươi yêu thích! Úp mặt lợn vào cái lồn biển mẹ và đếm đến 10!」
+「………………!!」
+Úp mặt xuống biển, điên cuồng đếm 10 giây.
+1――――
+2――――
+3――――――
+4――――――――
+Dần dần, cơ thể bắt đầu run rẩy như thể co giật vì thiếu oxy.
+5――――――――
+6――――――――――
+7――――――――――――
+………………
+Chịu đựng đi— nếu ý thức sắp sửa tan biến thì hãy cắn mạnh môi dưới để giữ vững tinh thần—
+8――――――――――――
+9――――――――――――――――…………
+「――――phù phù――!」
+Chịu được rồi――――10 giây.
+「Hộc…………hộc hộc…………っ!」
+Hết cả hơi, mình chết mất...
+Nhưng... mày thấy không? Tao đã vượt qua được cái Kunni Fest chết tiệt đó.
+Với cái này, ít nhất thì tao cũng...
+「Tốt! Khởi động đến đây là kết thúc!」
+「...ư, gì... vậy...?」
+「Mày hẳn là tràn đầy năng lượng sau khi tắm biển *oman* rồi chứ hả! Tập hợp lại! Chúng ta sẽ chạy đến học viện ngay lập tức!」
+Tôi cạn lời.
+Với số lần chống đẩy vừa rồi, thể lực của mình đã đến giới hạn rồi.
+Đã vậy quần áo còn dính chặt vào da vì nước biển, chạy trong tình trạng này thì hoàn toàn...
+「Sao thế thằng bất lực kia!? Cái mặt gì đấy! Mày đang bắt chước cái mặt của thằng chim teo à!? Ghê vậy, giống y chang!」
+「Khụ, ư...!」
+「Không cương được thì không cố gắng được à! Đến chim còn không dựng nổi mà còn dám cười nhạo Tachibana! Mày chỉ xứng đáng làm *nekobana* thôi! Bỏ cuộc đi mèo con!?」
+「...tôi... vẫn... làm được...!」
+Gồng mình lên... và đứng dậy, quất roi vào cơ thể đang run rẩy.
+Đầu vẫn đau như búa bổ vì thiếu oxy, tay thì kêu gào thảm thiết, nhưng may mắn là chân vẫn còn cử động được.
+「Tôi sẽ... tập hợp...!」
+Loạng choạng, tôi nhập vào hàng của SS.
+Thật sự... cứ như quân đội thật sự vậy.
+「Hộc... hộc... tôi... về... rồi...!」
+「Chậm! Vượt quá thời gian quy định quá nhiều! Mày chậm đến mức tao định bắt đầu lễ tốt nghiệp luôn rồi đấy!」
+「Những con lợn *ofera* không theo kịp người khác thì không cần thiết cho SS! Nếu mày định phá rối chiến dịch thì hãy cúi mặt xuống và biến mất ngay lập tức như cái chim của mày!」
+Đầu óc tôi đã ngừng hoạt động từ lâu rồi.
+Dù có nghe thấy giọng nói, tôi cũng không hiểu ý nghĩa của nó.
+Nhưng, dù vậy... tôi vẫn biết là mình đang bị chọc tức.
+Chính vì vậy, tôi phải truyền đạt ý chí của mình một cách rõ ràng.
+「Tôi... sẽ...! Nhất định... vào được... SS...!」
+「Chết rồi à... đúng là, chỉ được cái mồm thôi chứ thực chiến thì còn lâu mới đạt... Tổ cứu thương, xem cho nó đi」
+「Tôi đã rất ngạc nhiên khi nghe nói Tachibana-kun bất lực... nhưng cậu ấy có một ý chí tuyệt vời. Một người không thể làm tình mà vẫn theo kịp từ ngày đầu tiên」
+「Hừm... so với việc suýt chết đuối từ ngày đầu tiên, ai mà chẳng trở nên tuyệt vời?」
+「Ư... v, về chuyện đó tôi vô cùng xin lỗi...」
+「Khụ... tao... vẫn... còn... có thể...」
+「Hừ... quả thật, chỉ được cái lì lợm... độ cứng đầu thì có lẽ thuộc hàng nhất nhì」
+「Tớ... về... rồi...」
+「Mừng cậu về Tachibana-kun... ủaー!? Chuyện, chuyện gì vậy!? Ổn không!? Bị bắn rồi!?」
+「B, bình tĩnh-bình tĩnh-... Những lúc thế này, hình như là phải dùng cái... làm tim đập thình thịch ấy... là gì nhỉ... A... A, D... E...?」
+「Không phải DEAD chứ...?」
+「Đúng rồi DEAD!」
+「Chắc chắn không phải cái đó đâu...」
+「A! Tachibana-kun còn sống... may quá...」
+「Tưởng đâu sắp ban cho cậu cái chết rồi chứ...」
+「Chào mừng anh về... trông tàn tạ quá vậy... ổn không...?」
+「Ừm... quần áo thì bẩn chút thôi, không sao đâu」
+「Mấy bài huấn luyện SS đó, đối với tao chỉ như trò trẻ con thôi」
+「Hình như đầu gối đang run bần bật kìa...?」
+「...Đây là do hưng phấn thôi. Asa-chan có làm phiền Wata-chan không?」
+「Ừm... ngoan ngoãn không nghịch ngợm gì hết... đúng là một đứa trẻ ngoan được dạy dỗ cẩn thận mà...」
+「Em mới là người cần được chăm sóc đấy?」
+「Em vừa chơi game với Asane-chan đến tận nãy giờ đó」
+「Vậy à」
+Asa-chan vốn là một người khép kín mà lại chơi game với người thật ngoài đời, đúng là chuyện hiếm có.
+Dù nói gì thì nói, em gái mình vẫn là một người thích cô đơn. Chắc là Wata-chan đã thay chị chăm sóc em ấy rồi.
+Không... hay là thay em gái ấy nhỉ?
+Có lẽ mình bị coi như đứa trẻ con trong họ hàng cũng nên.
+「À... hehe... hôm qua bị tụt rank thê thảm, suýt nữa thì phát điên, nhưng mà lâu lắm rồi mới được đi gank gà đã đời, sướng tê người luôn...」
+「Không được xả stress lên Wata-chan-senpai đâu đó」
+「Em xin lỗi Wata-chan-senpai, em gái em lại lôi chị vào mấy chuyện kì quái...」
+「Chuyện kì quái...? Không sao không sao. Giúp đỡ đàn em là chuyện đương nhiên của đàn chị mà!」
+Vênh mặt lên, vỗ bẹp cái ngực lép.
+Hình như không hiểu lắm thì phải.
+「À, đúng rồi đúng rồi. Tachibana-kun, cậu luyện tập mệt rồi đúng không! Nè, nhìn nè nhìn nè! Tớ mua đủ thứ cho cậu đó」
+「Khi mệt mỏi thì đồ ngọt là nhất! Marshmallow nè, kẹo sủi bọt nè, pudding khổng lồ, cả bánh pancake nữa chứ!」
+Cử chỉ lấy đồ ngọt ra đầy hứng khởi của cô ấy, cứ như một đứa trẻ lấy đồ chơi từ hộp bất ngờ vậy.
+Không phải Nanase, nhưng thật sự chỉ nhìn thôi cũng thấy癒される (iyasareru - được chữa lành)…….
+Dù sao thì cô ấy cũng đã mua nó cho mình. Tuy chưa đến giờ ăn tối, nhưng mình cứ ăn thử chút gì đó vậy.
+「Vậy thì……cho em xin miếng pancake được không ạ?」
+「Ồ, lựa chọn tốt đấy. Pancake đúng là tuyệt vời, mang đến hương vị hạnh phúc mà……Vậy thì, để tớ đút cho cậu nhé, há miệng ra nào」
+「Không cần phải làm đến thế đâu……」
+「Không sao mà. Tớ muốn thưởng cho Tachibana-kun đã cố gắng mà. Nào, há miệng ra nào ♪」
+Nếu đã nói vậy, thì mình xin mạn phép vậy.
+「A-a-a……nhồm nhoàm……」
+「――――――! C, cái này là……」
+「Ngon, ngon vãi……!?」
+「Fufu……Tớ hiểu mà……Pancake khi mệt mỏi đúng là tuyệt vời, ngon bá cháy luôn ấy. Vẫn còn nữa đấy……há miệng ra nào ♪」
+「M-m……ngon, ngon quá đi……!」
+Ghê vậy……Khi mệt mỏi, mình có thể cảm nhận được vị ngon đến mức này sao……!
+「Ahaha, Tachibana-kun làm quá lên rồi」
+「Em không có làm quá đâu!」
+「Cái bánh pancake này, ngon vãi chưởng……ngon đến mức em sắp thức tỉnh sức mạnh *Esper* luôn rồi này……!」
+「……Đến thế cơ á? Tachibana-kun, cậu ăn ngon lành quá làm tớ cũng thèm ăn theo luôn rồi này……」
+「Vậy thì chị cứ ăn đi ạ. Vốn dĩ là Wata-chan *senpai* mua mà」
+「Thật á? Ehehe, Tachibana-kun tốt bụng quá đi……tớ xin phép nhaaa」
+「A…………」
+Wata-chan, vẫn dùng cái nĩa vừa đút cho mình――
+「Ưm-m! Thật nè! Cái này ngon thật, mua đúng là chuẩn luôn……Ủa? Sao thế Tachibana-kun?」
+「Dạ……không, không có gì ạ」
+「……Mấy thằng còn *zin* đúng là hay để ý đến mấy vụ hôn gián tiếp nhỉ……」
+「Khụ……tuyệt đối, em không có để ý gì hết……!」
+「Hôn gián tiếp……? A, cái vụ hay thấy trong truyện tranh shoujo nè! V, vừa nãy tớ vừa hôn gián tiếp hả!? Yeah, lãng mạn quá đi!」
+「Chị nói thế thì đến một mẩu lãng mạn cũng không còn luôn đó……」
+「Sao chứー!?」
+Chỉ một khoảnh khắc ý thức được điều đó thôi cũng khiến mình thấy thật ngớ ngẩn, Wata-chan hôm nay vẫn cứ là một thiên thần thuần khiết.
+「Tachibana-kun cũng chịu khó phết nhỉ... Cảm thấy thế nào rồi ạ?」
+「À... Rất là tốt ạ...」
+Sau khi ăn xong bánh pancake, một lúc sau Wata-chan vỗ vai cho mình.
+Cảm giác từ bàn tay nhỏ nhắn và mềm mại thật tuyệt diệu, mỗi lần được vỗ *bộp bộp* là bao mệt mỏi trong người lại tan biến.
+「Ê hế hế... Em giỏi xoa bóp vai từ hồi bé tí rồi. Hồi em tặng phiếu mát-xa vai cho ông bà, hai người vui lắm đó」
+「...Hình như chữ “ta” bị thừa một lần rồi thì phải...」
+「Ể...? Vai... xoa, xoa bóp vai phiếu?」
+「Lại còn tăng thêm nữa...」
+「Vai... xoa vai phiếu?」
+「Gần đúng rồi...」
+「Phiếu trả thù!」
+「Nghe ghê vậy」
+「Nhưng mà... phù...」
+「Wata-chan *senpai*, chị giỏi thật đó... Lực vừa phải dễ chịu... Thật thư giãn...」
+「Fufun, đúng không? Em cũng hay xoa bóp cho Rei-chan nữa đó」
+「Hể... Vậy ạ...」
+Chỉ vừa nghe thấy cái tên đó thôi là mình đã thấy tụt hết cả hứng.
+「Tachibana-kun? Sao tự nhiên xìu thế kia?」
+「À, không... Em vẫn không thể tin được là Wata-chan lại là bạn của con quỷ huấn luyện viên đó...」
+「Quỷ huấn luyện viên...? Rei-chan hả? Ừm... Có thể đôi lúc con bé hơi khó gần, nhưng sâu thẳm bên trong là một người tốt bụng và hiền lành đó!」
+「Hiền lành...?」
+Đó chẳng phải là từ ngữ xa lạ nhất với Tudagawa *senpai* sao...?
+「Wata-chan *senpai*, chị không bị lừa đó chứ...?」
+「A ha ha ha. Rei-chan thì chắc chắn không đời nào làm thế đâu」
+Cái sự tin tưởng này là sao...!?
+Thật sự là mình không hiểu nổi.
+Thân thiết với Tudagawa *senpai* như thế, sao mà vẫn có thể vô tư được như vậy chứ.
+Trong mắt mình, *senpai* đó chỉ là một con quỷ đội lốt người thôi.
+Ngay cả Wata-chan cũng bị bắt tè dầm trong kỳ thi nhập ngũ, mà chị ấy không để bụng sao...?
+Dù bây giờ, chỉ cần nghĩ đến đợt huấn luyện tuyển chọn bắt đầu từ ngày mai thôi là tao đã thấy chán nản vãi rồi, ấy thế mà—
+「...Nếu mà có khổ sở hay khó khăn quá thì bỏ chạy cũng được đó?」
+「Ể...?」
+「Có thể Tachibana-kun sẽ nghĩ là hèn nhát... nhưng không có đâu nha? Tớ biết rõ Tachibana-kun đang cố gắng hết sức mà」
+Người này thật sự là... thỉnh thoảng lại nói ra những điều như thể nhìn thấu mọi thứ vậy.
+Vốn dĩ tao chẳng có ý định bỏ chạy, nhưng nếu bị nói như vậy thì lại càng không thể bỏ cuộc.
+「Cảm ơn cậu... nhưng tớ sẽ không bỏ chạy đâu」
+「Tớ cũng có lòng tự trọng của mình, và với tư cách là leader, tớ không thể thua lũ biến thái dâm dục SS được」
+「Với lại... tớ còn được Wata-chan *senpai* tặng bùa gấu may mắn nữa mà」
+「Fufu... vậy à. Ngoan ngoan, Tachibana-kun giỏi lắm. Vậy thì phải cố gắng lên nha, tớ sẽ luôn ủng hộ cậu!」
+「Cậu thật đáng tin cậy」
+「...Mà này, cậu có ổn về thời gian không?」
+「Ừm...? Oa, muộn thế này rồi! Tớ đã nói là có thể sẽ về muộn, nhưng mẹ tớ sẽ lo mất, chắc tớ phải về thôi...」
+「Ừm, tớ có thể mượn nhà vệ sinh trước khi về được không?」
+「Cứ tự nhiên, ở đằng kia」
+Wata-chan có vẻ hơi vội vã, bước nhanh về phía nhà vệ sinh.
+「Chỉ cần nhìn thôi cũng thấy hiệu quả trị liệu cao rồi...」
+「Chuẩn luôn」
+「...Asa-chan cũng cảm ơn nha. Vì đã giữ Wata-chan lại」
+「Ừm... không có gì, tớ chỉ chơi game cùng thôi... nhưng anh ổn không...? Anh cũng mệt rồi mà... giờ còn phải đưa em ấy về nữa...」
+「Không có gì to tát đâu」
+「Wata-chan đã hai lần suýt bị tấn công rồi... không thể để em ấy về một mình được」
+Cầm sợi dây đeo hình gấu gắn trên máy tính bảng.
+Wata-chan đang ủng hộ tao một cách thuần khiết như vậy.
+Tuyệt đối không được để xảy ra chuyện em ấy bị tấn công.
+「Tớ cứ tưởng nó giống con sóc mà Wata-chan gắn trên cặp... nhưng hình như con sóc làm đẹp hơn...」
+「Chắc chắn rồi... có lẽ cái đó là do mẹ em ấy làm cho ấy chứ?」
+Có lẽ, con gấu này là do em ấy vừa được mẹ chỉ vừa cố gắng làm ra.
+Chỉ cần tưởng tượng thôi cũng thấy khung cảnh thật ấm lòng.
+Chỉ cần nhìn con gấu thôi, tao đã thấy có thêm chút động lực rồi.
+「Mình cũng phải cố gắng lên mới được――」
+「Anh trai biến thành lolicon rồi...？」
+「Tuyệt đối không phải」
+
+
+03_07
+
+Ngày hôm sau, khóa huấn luyện tuyển chọn chính thức bắt đầu.
+Tan học – SS triệu tập các học viên ứng tuyển đến sân trường.
+"Nghiêm!"
+「Chắc các ngươi cũng biết, ta là đội trưởng ủy ban kỷ luật, Tadashikawa Rei! Trừ khi bị ta bắt chuyện hoặc bú cu, còn lại thì khâu m*m vào cho ta! Rõ chưa!」
+「Rõ!」
+「Rõ!? Vừa ai nói rõ đấy!? Lấy rỉ m*m ra khỏi tai rồi nghe cho kỹ! Trước và sau khi há m*m ra phun tinh trùng thì phải thêm "thưa" vào!」
+「Thưa vâng, thưa!」
+"Junnosuke"
+「...Thưa? Không phải là... *madam* sao...?」
+「Này! Ai vừa nói đấy!?」
+「...!」
+「Nekobana, là mày hả!? Khi nào tao bắt chuyện với mày!? Hay là mày đang bú cu đấy!? Chẳng lẽ có cái c*t nào mà chỉ có thằng ngu mới thấy ở đây à!?」
+「Không... Tôi chỉ nghĩ là, đối với phụ nữ, không phải nên dùng *madam* thay vì thưa sao ạ...」
+「Cái gì!? Tao chẳng nghe thấy gì cả! Tinh trùng với m*m làm sao!?」
+「Ý tôi là, đối với phụ nữ, không phải nên dùng *madam* thay vì thưa sao ạ!!」
+「Ồ! Hóa ra mày là tiến sĩ tiếng Anh à! Tất cả nghe đây! Từ giờ Mr. Nekobana sẽ mở lớp học tiếng Anh từ thiện cho chúng mày đấy!」
+「Đây là Tom à!? Vâng! Đó là c*t!!」
+「Khụ...!?」
+「Ở đây, lời của cấp trên là tuyệt đối! Đã hiểu thì đừng có mà ngồi xổm như c*t vừa thủ dâm xong nữa, đứng lên! Há m*m ra trả lời xem nào!」
+「Th... thưa vâng, thưa...!」
+「Không nghe thấy gì cả! Đến cả tiếng rắm của thằng già nằm liệt giường còn to hơn đấy! Đến cả mồm cũng liệt à mày!」
+「THƯA!! KHÔNG!! THƯA!!!」
+「Nghe đây! Tao không phân biệt đối xử! Impo, chim ngắn, xuất sớm, m*m thâm, l* to, bướm xệ, dù là cái gì tao cũng không khinh thường! Bởi vì tất cả chúng mày đều là lũ tinh trùng cặn bã như nhau!」
+「Một lần xuất tinh có 300 triệu con tinh trùng! Chỉ có một con thụ tinh được thôi! Nhưng chúng mày thậm chí còn không lọt nổi vào 299.999.999 con còn lại!」
+「Đến cả cơ hội tham gia cuộc đua chúng mày cũng không có, lũ tinh trùng cặn bã ạ! Chúng mày sẽ bị tiêu hủy cùng với lũ gián dính trên giấy ăn bị xịt thuốc diệt côn trùng!」
+「Nuôi dưỡng chúng mày thành những con tinh trùng có ích, không khiến tao xấu hổ khi bắn vào trong, và loại bỏ những con tinh trùng vô dụng bằng bao cao su khỏi SS yêu dấu là nhiệm vụ của tao! Rõ chưa!」
+「Cái thằng đeo thắt lưng kia! Mày có ý gì với cái thắt lưng giống bao cao su đó hả!? Tên là gì!?」
+「Thưa! Nakamura Shu ạ! Thưa!」
+「Đừng có đùa! Cái thứ tinh trùng mà dám mang cái tên giống con người! Từ hôm nay mày là Schubert! Rõ chưa, Mozart!」
+"Schubert"
+「Cái kiểu tóc hai chùm kia... quen quen à nha... Chẳng phải mày là con đĩ bợ đỡ bị loại ngay ngày đầu còn gì! Mới tới đây để chế giễu tao hả!?」
+ "Bợ đỡ"
+「Vâng! Không! Vâng!」
+「Con đĩ này giọng ngọt sớt! Lại tới đây làm gì nữa? Chẳng phải bố mày bị hút vào cái lồn của mẹ mày rồi còn gì!?」
+「Vâng! Vì là mẹ đơn thân nên em muốn giúp mẹ em bằng học bổng đặc biệt! Vâng!」
+「Mày hiếu thảo tới mức tao muốn khóc ra nước lồn luôn đó! Giờ tao sẽ địt cái lồn bợ đỡ của mày thay cho bố mày, chuẩn bị mà vắt nước lồn ra từ lỗ chân lông đi!」
+Đàn chị Tadasukawa sau đó vẫn tiếp tục thể hiện sự hống hách đáng sợ của mình, tự tiện đặt hết tên này đến tên khác cho đám học viên.
+Cuộc huấn luyện còn chưa bắt đầu nữa kìa.
+Vậy mà—khi nhắm mắt lại, tôi đã thấy địa ngục ở ngay đó rồi.
+「Hộc... hộc.........!」
+Nếu là huấn luyện tuyển chọn, chắc sẽ dễ hơn huấn luyện mà thành viên chính thức đã làm—kiểu như,
+Ngay
+từ đầu tôi đã không nghĩ thế rồi.
+「Hộc... dù gì thì... cái này là...!」
+Sau khi tập chống đẩy kiểu SS địa ngục ở bãi biển như hôm qua, tôi chạy về đến sân trường—và ở đó còn phải chạy thêm 10 vòng sân nữa.
+Hơn nữa, không chỉ đơn giản là chạy quanh sân vận động.
+Trong lúc chúng tôi ra bãi biển, một đường chạy vượt chướng ngại vật như trong khu huấn luyện quân đội đã xuất hiện.
+「Chậm chậm chậm! Tất cả chúng mày là tinh trùng sên hả!? Nếu không định thụ tinh thì về nhà mà dính vào giấy ăn đi!!」
+「Khốn... ai mà...!」
+「Sao thế mèo con!? Mày còn thua cả bé Susuko năm nhất nữa kìa! Không xuất được tinh trùng thì không có động lực hả!?」
+「...Vâng! Không! Vâng!!」
+「Vậy thì thể hiện ý chí đi! Để vượt qua huấn luyện, yếu tố thể chất chỉ chiếm 1%, 99% là tinh thần! Cố lên! Đừng để bị bỏ lại!」
+「Vâng! Rõ! Vâng!!」
+Tôi vắt kiệt chút sức lực còn sót lại.
+Bò trườn dưới hàng rào thép gai.
+Vượt qua chướng ngại vật cao chắc phải đến 7 mét.
+Với đôi chân rã rời, tôi chạy băng qua sân trường.
+………………………………
+……………………
+…………
+「Gừ…………hà………………hà…………」
+Cuối cùng cũng xong…….
+Tưởng chết tới nơi rồi chứ………….
+「Tốt! Ta thích cái kiểu không ai bỏ cuộc này đấy! Mừng đi lũ heo Mazo kia! Để thưởng cho các ngươi, ta sẽ tặng 200 cái SS-style Burpees! Bắt đầu!」
+「――――――」
+「Sao thế! Mau bắt đầu đi!」
+「……Vâng! Rõ! Thưa ngài!!」
+「――một!!」
+「――――hai!!」
+Cứng đầu gào lên, thử thách 200 cái Burpees địa ngục.
+Từ đó về sau, ký ức của tôi trở nên mơ hồ――――
+Bằng cách nào đó, tôi đã sống sót qua ngày huấn luyện đầu tiên.
+Những ngày huấn luyện địa ngục cứ thế tiếp diễn――ngày này qua ngày khác.
+「Hôm nay sẽ tiến hành huấn luyện tập thể! Hành động tác chiến của SS về cơ bản được thực hiện theo quy mô phân đội! Nekobana――lại đây!」
+「Mày là đội trưởng. Truyền đạt chính xác chỉ thị của tao. Bảo cho vào *manko* thì phải cho vào *manko*. Nếu lũ tinh trùng mà hướng về phía lỗ đít thì tất cả là trách nhiệm của mày. Rõ chưa!」
+「Vậy thì, trong vòng 15 phút phải dựng xong hai cái lều. Tao nói trước, không phải lều ở bẹn đâu đấy! Từ việc chia tổ trở đi đều là vai trò của mày!」
+「Mau bắt đầu đi! Ran, bấm giờ 15 phút!」
+「Nghe này! Từ giờ trong 15 phút phải dựng xong hai cái lều――chia thành 2 đội trái phải từ trung tâm để làm việc!」
+"Susuko"
+「Rõ thưa ngài!」
+Chia học viên thành hai nửa, ngay lập tức bắt đầu dựng lều.
+Ngay cả cách lắp ráp còn chưa được học mà đã bắt dựng lều, đúng là vô lý hết sức.
+Dù vậy, một khi đã được chỉ định làm đội trưởng, thì ít nhất cũng phải thành công trong việc này――
+「Đầu tiên là……trải rộng lều ra! Sau đó là……cột. Luồn cột vào!」
+Có lẽ, trình tự lắp ráp là đúng như thế này.
+Vì không có kinh nghiệm nên tôi không biết 15 phút là dài hay ngắn, cũng không biết phân bổ thời gian hợp lý cho từng công đoạn.
+Dù sao thì cũng phải nhanh lên.
+「Được rồi, vậy thì dựng lều lên thôi!」
+「Vâng! Ơ? Có gì đó sai sai thì phải……?」
+「Cái gì――――?」
+Tôi dựng lều một cách hấp tấp, nhưng chắc chắn có gì đó sai sai.
+Lều không đứng thẳng, một trong các cột bị gãy theo một hướng kỳ lạ.
+Lẽ ra phải xỏ các cột qua lỗ để chúng giao nhau, nhưng có lẽ đã có sai sót ở đâu đó giữa chừng—
+「Gấp lều lại! Lắp lại cột!」
+Chết tiệt. Mất thời gian quá nhiều rồi.
+Thế này thì làm sao mà kịp 15 phút—
+“Ran”
+「Rei-senpai, hết 15 phút rồi ạ!」
+Không ổn rồi—chưa xong gì cả.
+「Tất cả tập hợp lại!」
+「... Rõ, thưa ngài!」
+「Ồ... đây là lều à? Tuyệt vời! Hình dáng lạ thật, đây là lều tương lai à! Các cậu sẽ cắm trại ở đây đúng không!?」
+「Không, thưa ngài!」
+「Đội kia dựng được cái lều vãi cả hùng vĩ kìa. Ai chỉ huy đội đó?」
+「Tôi ạ! Chính tôi ạ!」
+「Cậu có kinh nghiệm à?」
+「Học viên Schubert không chỉ làm nhạc mà còn dựng được cả lều nữa đấy! Mày biết không, mèo con?」
+「Ta đã bảo mày làm đội trưởng! Nếu mày còn không biết gì về đồng đội thì làm sao làm đội trưởng được!?」
+「Đáng lẽ dựng lều chỉ mất 10 phút là đủ! Nhưng ta đã cho tận 15 phút. Mày nghĩ 5 phút này là để mày thủ dâm chắc!?」
+「Chỉ cần 5 phút là có thể dễ dàng xác nhận xem có kinh nghiệm hay không! Nhưng mày đã không làm! Đến con lợn *ofera* cũng biết tại sao mày không làm!」
+「Về cơ bản là mày không tin tưởng đồng đội! Nếu mày muốn làm trùm thì biến đi chỗ khác! SS không cần những kẻ không tin đồng đội!」
+Cứng họng.
+Những gã cùng tham gia huấn luyện tuyển chọn SS, đối với một thằng NLNS như tôi thì cũng chỉ là kẻ thù.
+Việc tôi không tin tưởng ai đã bị chỉ trích trúng phóc.
+「Việc không *yaricommu* được không phải là cái cớ! Nếu không *sex* được thì hãy cố gắng để ý xung quanh hơn người thường đi! Rõ chưa!」
+「Vậy thì ngay lập tức hãy nâng cao tinh thần đoàn kết với đồng đội đi! Do lỗi phán đoán của đội trưởng mà nhiệm vụ không hoàn thành. Toàn đội, 3 hiệp SS *burpee*, mỗi hiệp 200 cái!」
+「Rõ, thưa ngài!!」
+Sau 3 hiệp địa ngục *burpee* 200 cái, cuối cùng chúng tôi cũng được nghỉ 5 phút ngắn ngủi.
+「Haa... Schubert, đúng không? Lúc nãy tôi hơi quá lời... tại tôi mà」
+「Không sao đâu... Tôi muốn vào đội thông tin liên lạc... Thể lực thì không tự tin lắm, nhưng kiến thức thì có thừa. Sau này nhờ cậu giúp đỡ nhé」
+「À, vâng... tôi xin nghe theo」
+「Hừm... Theo tính toán của tôi, xác suất chúng ta vượt qua khóa huấn luyện tuyển chọn là 85.5%... Cùng nhau vào SS nhé?」
+「...Ừ」
+Tuy cái tên hơi kỳ quặc, nhưng hắn ta lại tỏ ra là một người đàn ông tốt bụng.
+Việc kết giao với những người có nguyện vọng vào SS có chút phức tạp, nhưng――
+Để có được lòng tin, mình không được làm bất cứ điều gì gây ra nghi ngờ.
+Khi ở đây, mình cần phải che giấu những tín điều ban đầu.
+Che giấu niềm tin, giết chết bản ngã và hành xử như một thành viên SS――
+Với tư cách là thủ lĩnh của NLNS, mình phải cho họ thấy mình có thể làm được điều đó.
+Ngày hôm sau, rồi ngày hôm sau nữa――khóa huấn luyện của huấn luyện viên quỷ súc vẫn tiếp tục cho đến khi trời tối.
+「Hự, aaaa... ưm, ya, ah...」
+「Aaaaaaa!! Hộc... Lại bắn mất rồi... Hộc... Xin tha cho em... Cho em nghỉ với...」
+「Không chấp nhận! Chỉ bắn có một hai lần mà đã rệu rã thì làm được cái gì ở SS!? Lúc nào cũng phải giữ cho thể lực đầy ắp để bắn liên tục đi!」
+Hôm nay là huấn luyện tính sản――nói ngắn gọn là huấn luyện tình dục.
+Người thay thế cho Kudakawa-senpai làm huấn luyện viên là Hội trưởng Hanamaru.
+Ngày thường thì toàn những khóa huấn luyện quái dị không ai ngờ tới――nhưng cái này thì vượt xa khỏi sự điên rồ.
+Hay nói đúng hơn――việc nhìn những học viên cùng nhau trải qua những ngày địa ngục này làm tình với nhau, thú thật, khiến mình cảm thấy khá phức tạp.
+「Hòn đảo này đang thiếu chim trầm trọng! SS không cần những thằng chim chỉ bắn một lần là xìu!」
+「Lúc nào cũng phải phát tình! Các anh là giống đực! Hãy đâm cái chim yếu đuối của các anh vào cái lồn heo nái rồi bắn mười phát liên tục mà không được rút ra hay xìu đi!」
+Liệu có phải ai trở thành huấn luyện viên của SS cũng đều trở nên như vậy không...?
+「Khụ, hộc... Bắn mười phát liên tục vào âm đạo á...!? Không có dữ liệu đó trong thông tin của tôi... A, ra rồi!」
+「Khi bắn vào trong thì phải hô “Địt cho có bầu đi!” Chẳng lẽ lúc còn trong bụng mẹ không được dạy hả!? Lũ lồn heo nái kia, nếu chỉ biết rên ư ử thì tạp chí người lớn cũng làm được nhé!?」
+「………………」
+Nói sao nhỉ... Thật là...
+「Tachibana, còn ngẩn người ra đấy làm gì! Đừng tưởng không tham gia huấn luyện tính sản là được trốn nhé! Lại đây!」
+「――Vâng, rõ!」
+「Hôm nay cậu có một bài tập khác. Hãy huấn luyện cái này đi」
+Kudakawa-senpai rút một vật từ thắt lưng ra và đưa cho tôi.
+「Cái này... Súng lục SS――」
+「Ư...!?」
+Một cú sốc kinh hoàng ập đến, trời đất đảo lộn.
+Cơn đau rát má ập đến sau đó cho tôi biết mình vừa ăn trọn một cú tát trời giáng――
+Ngay sau đó, cổ áo tôi bị túm lấy.
+「Ngươi vừa phạm phải một sai lầm không thể tha thứ. Hiểu không?」
+Tachikawa-senpai đang trừng mắt nhìn tôi với ánh mắt sắc bén chưa từng thấy.
+Một sai lầm không thể tha thứ...?
+Chuyện quái gì vậy――đầu óc quay cuồng, não bộ đình công.
+「Không hiểu à? Khi ngươi nhận lấy nó, họng súng đã chĩa về phía ta. Ngón tay đặt bên trong vòng bảo vệ cò súng」
+「――――!!」
+「Đạn đã lên nòng và nếu không có khóa an toàn, nó đã sẵn sàng khai hỏa――cần ta giải thích thêm không?」
+「K-không ạ――Thưa ngài! Không! Thưa ngài!!」
+「Cấm chỉ tuyệt đối việc chĩa súng vào đồng đội ngoài thao trường. Còn tái phạm, ta sẽ tống cổ ngươi khỏi SS không cần hỏi ý kiến. Rõ chưa?」
+Bị quát mắng còn dễ chịu hơn là bị đe dọa bằng giọng điệu bình tĩnh.
+Tachikawa-senpai thở dài, buông tay khỏi cổ áo tôi.
+「Haa... Ít nhất cũng phải tự mình phán đoán được mấy chuyện đó chứ. Với lại, đừng có 'thưa ngài' gì ở đây. Ồn ào nhức cả tai」
+「Thưa... Vâng, tôi hiểu rồi」
+「Vậy, sau đây sẽ là huấn luyện bắn súng... Ngươi đã từng thấy SS hay SHO sử dụng súng chưa?」
+「――Rồi ạ」
+Không những thấy mà còn bị chĩa súng vào mặt không biết bao nhiêu lần rồi ấy chứ.
+「Vậy à... Chắc ngươi cũng biết, đạn dược sử dụng là đạn chống bạo động. Cách dùng cơ bản là bắn vào chân để vô hiệu hóa」
+「Vậy... Cần bắn bao nhiêu phát để vô hiệu hóa ạ?」
+「Một viên. Thường thì chỉ cần thế là đủ để không thể tẩu thoát」
+Uy lực đến mức đó cơ à.
+Việc tôi vẫn sống nhăn răng và trốn thoát đến tận hôm nay sau khi ăn đạn vài lần――có lẽ chỉ là do may mắn.
+「Ngay cả súng lục mà tân binh sử dụng cũng có uy lực như vậy. Nếu trở thành học sinh đặc biệt, ngươi sẽ được trang bị súng tiểu liên, súng trường tấn công và súng bắn tỉa――」
+Tachikawa-senpai giải thích về từng loại vũ khí.
+Nói cách khác, đây chẳng khác nào buổi thuyết trình về vũ khí mà kẻ địch của chúng ta đang sử dụng.
+Nghe trực tiếp về uy lực của chúng――thật lòng mà nói, tôi thấy ớn lạnh.
+「Những vũ khí này có thể gây chấn động não nếu bắn trúng đầu. Nếu bị bắn liên tục, có thể dẫn đến bệnh não chấn thương mãn tính」
+「Mãn tính, chấn thương...?」
+「Nói dễ hiểu thì, nó giống như cái gọi là bệnh đấm bốc ấy mà」
+「À, cái mà mấy tay đấm bốc hay đô vật hay bị ấy hả――」
+Tôi nghe nói không chỉ riêng họ, mà cả những vận động viên thể thao dễ bị chấn động đầu cũng dễ mắc bệnh đấm bốc.
+Do đầu liên tục chịu những chấn động mạnh, dẫn đến các vấn đề về não, gây ra đau đầu và suy giảm trí nhớ... thì phải.
+「Không chỉ vận động viên. Binh lính bị chấn động não nhiều lần cũng dễ mắc bệnh đấm bốc」
+「Vì vậy, ở SS, dù trong tình huống nào, nếu bị trúng đạn Riot vào đầu thì sẽ được nghỉ vài ngày. Đây không phải là quyền lợi mà là nghĩa vụ」
+「...Khẩu súng tôi sắp dùng có uy lực lớn đến vậy... Ý anh là vậy đúng không」
+「Đúng vậy. Đừng bao giờ quên điều đó... Mặc dù, như tôi đã nói lúc đầu, mục tiêu chủ yếu là chân. Hơn nữa, nếu không có giấy phép nổ súng thì thậm chí còn không được bắn」
+「Giấy phép nổ súng thường được cấp với tần suất như thế nào?」
+「Không thể nói một cách khái quát được. Có những người làm SS 6 năm từ bộ phận B mà chưa có kinh nghiệm thực chiến nào」
+「Nhưng, bây giờ có lẽ không được như vậy đâu. Tôi cũng đã làm SS lâu rồi... Tình hình gần đây rõ ràng là bất thường」
+Bất thường, có lẽ là có liên quan đến vấn đề an ninh của đảo.
+Nếu là lời của tiền bối Tatsukawa, thì sự tồn tại của thế lực phản giao phối cũng nằm trong phạm vi “bất thường”...
+「Tôi đã nói là nhắm vào chân là cơ bản... Nhưng nếu đối tượng là thế lực phản giao phối hay lũ ấu dâm đồi bại động vào vị thành niên, thì cứ thoải mái mà bắn thẳng vào đầu」
+Giọng nói lạnh lùng khiến sống lưng tôi run lên.
+Vừa mới thuyết giảng về sự nguy hiểm của việc tấn công vào đầu, vậy mà lại bảo cứ thoải mái mà nã vào đầu đối với thế lực phản giao phối -- tức là những kẻ như chúng tôi.
+Tôi không hiểu.
+Việc đề cao tình yêu và từ chối tình dục vô độ có gì xấu đến vậy sao?
+Tại sao, chúng tôi lại phải bị thù địch đến mức đó?
+「Ngoài ra... còn có cả kẻ phản bội nữa. Tachibana-kun, nếu cậu dám làm điều gì đó phản bội SS, tôi sẽ không ngần ngại mà bắn thẳng vào đầu cậu đâu. Rõ chưa」
+「...Vâng」
+Mồ hôi lạnh toát ra.
+Cứ như thể... tôi bị nhìn thấu vậy.
+「Được rồi... hơi dài dòng rồi nhỉ. Vậy thì... bắt đầu luyện bắn thôi」
+「Trượt rồi! Lại sai tư thế nữa rồi! Tôi đã bảo cậu bắn với tư thế đó à!? Không được duỗi thẳng cả khuỷu tay lẫn đầu gối, phản lực sẽ làm lệch mục tiêu!」
+「...Vâng!」
+「Nó giống như tình dục vậy! Nếu *chim* không cương cứng đúng tư thế thì không thể xuất tinh được! Nếu tư thế không đúng thì bắn cũng trượt thôi! Khắc cốt ghi tâm!」
+「Phù...」
+Rời ngón tay khỏi cò súng, hạ súng xuống.
+Tôi cũng không hẳn là không ôm ấp kỳ vọng quốc dân rằng, dù những thứ khác có tệ đến đâu, thì ít nhất tôi cũng có tài năng bắn súng phi thường...
+「Dù đã biết trước, nhưng kết quả này chẳng đáng khen chút nào... Dù sao thì nửa sau cũng có chút khá hơn nhỉ」
+Quả nhiên là tệ hại.
+Nếu có kính bảo hộ hỗ trợ thì độ chính xác có lẽ sẽ tăng lên đáng kể, nhưng không đời nào tôi lại dùng nó ở SS.
+Đến nước này thì tôi thấy nhẹ nhõm hẳn.
+「Vậy... Huấn luyện tính dục vẫn tiếp tục nhỉ. Được rồi... Tachibana, bắn súng đến đây thôi. Tôi sẽ đặc biệt huấn luyện cận chiến cho cậu」
+「Thứ mà ta sắp dạy cho ngươi đây, là Seiranto Quench Combat... gọi tắt là SQC. Không phải là thứ nửa vời đâu. Đã sẵn sàng chưa?」
+「Vâng! Xin hãy chỉ bảo!」
+「Chỉ được cái mồm là nhanh thôi... Được thôi, trong lúc huấn luyện không cần để ý đến trên dưới gì cả. Cứ xông lên với toàn lực đi」
+Tôi cũng đâu phải là đã trải qua khóa huấn luyện địa ngục mấy ngày nay một cách vô ích.
+Thành quả huấn luyện... giờ, hãy để tôi cho cậu thấy.
+「Aaaaaaaahhhhhhhh!!」
+10 giây sau, tôi đã nằm bẹp dí trên đất, mặt cạ xuống đất mà gào thét.
+「Ngươi đúng là chỉ được cái mồm thôi! Ngươi nghĩ rằng có thể lừa được ta bằng cái trò giả vờ lộ liễu đó hả!?」
+「Ư... á, ư...!!」
+Bị đối phương khóa tay sau lưng, khớp xương bị siết chặt, một cơn đau dữ dội chạy dọc cánh tay.
+Tôi trừng mắt nhìn, nhưng vẻ mặt của Judogawa-senpai lạnh như băng.
+「Có câu 'Ưu tiên đường tắt hơn đường thắng'! Đó là câu nói chế giễu những kẻ ngốc hành động ưu tiên khoái lạc hơn là chiến thắng! Ta đang nói về ngươi đấy, đồ đường tắt!!」
+「Aaaaaaaahhhhhhhh...!!」
+「Gào lên thì mẹ sẽ đến cứu à!? Cơn đau sẽ làm cùn khả năng phán đoán, tiếng la hét sẽ làm tê liệt suy nghĩ đấy!」
+Cánh tay lại bị siết chặt hơn nữa, mồ hôi túa ra vì đau đớn tột độ.
+「Hãy yêu cơn đau! Nếu còn sức để la hét thì hãy dồn hết vào suy nghĩ đi! Trả lời đi!?」
+「V... vâng... vâng... vâng...!」
+「Không chỉ là nói suông đấy chứ!? Để ta xem câu trả lời đó có thật hay không...!」
+「――――――ッ!!」
+Cơn đau dữ dội như thể cánh tay sắp bị xé toạc.
+Sâu trong cổ họng,
+tiếng gào thét
+chực chờ bùng nổ, tôi nghiến răng nghiến lợi cố gắng kìm nén.
+Suy nghĩ đi... cố gắng xoay chuyển cái đầu như muốn nứt ra.
+Để phá vỡ tình huống này, phải làm thế nào...
+「Sao thế sao thế? Tấn công kiểu đó còn non lắm đó!!」
+「Ư… khụ…!」
+Tiếng thở dốc bật ra – nhưng tôi vẫn cố chịu đựng.
+Tay trái bị ghìm chặt với một lực khủng khiếp, dường như không nghe lời – nhưng tay phải thì đang rảnh.
+Tôi nắm chặt nắm đấm đang quờ quạng trên mặt đất –
+「Haaaaaa!」
+Tôi ném nắm sỏi vừa nắm được thẳng vào mặt senpai.
+Khoảnh khắc đó – sự trói buộc ở tay trái nới lỏng.
+Nếu là bây giờ…!
+「-!?」
+Ngay khi tôi cố thoát khỏi đòn khóa khớp, anh ta lập tức dùng toàn thân đè lên tôi.
+「Tấn công vào mắt à… không tệ. Để tao nâng cấp tinh trùng dính trên giấy ăn thành tinh trùng bắn vào *ona hole* cho mày!」
+「Nhưng, tao đã lường trước điều đó rồi! Nghe đây, nhớ cho kỹ! Một khi mày tạo ra tình huống bất lợi trước đối thủ mạnh hơn, mày xác định rồi!」
+「Ư… ư…!」
+「Nếu mày chỉ nghĩ đến các biện pháp đối phó khi đã rơi vào tình huống bất lợi, thì ngay từ đầu hãy nghĩ cách để không rơi vào tình huống đó đi! Rõ chưa!」
+「…Vâng! Rõ, thưa ngài…!!」
+「Phù… có vẻ như huấn luyện sinh sản đã kết thúc… vậy thì, buổi huấn luyện hôm nay kết thúc tại đây!」
+「Cảm ơn thầy, ạ…!」
+「Haa…」
+Tôi cúi đầu, toàn thân mất hết sức lực, ngồi phịch xuống.
+Cuối cùng – tôi bị đánh cho tơi tả mãi cho đến khi trời tối.
+Các học viên khác cũng bị bắt dọn dẹp cơ sở huấn luyện sau địa ngục cực khoái, và hầu hết bọn họ đều gần chết.
+Tôi cũng bị hành hạ toàn thân bởi môn võ SS, thế này thì không biết có về nhà nổi không nữa…
+「–Ơ? Không đau như mình nghĩ…?」
+「Đương nhiên rồi. Mục đích cơ bản của SQC là trấn áp bạo loạn. Không phải để gây thương tích hay làm bị thương」
+「À, ra là vậy…」
+「Nếu sử dụng vũ khí kết hợp thì lại là chuyện khác… đó có phải là điều mày muốn không?」
+「K-không ạ…」
+「…Tao chỉ đùa thôi, mày còn non lắm. Mày có khá hơn một chút rồi đấy… nhưng vẫn còn kém lắm. Từ giờ trở đi phải cố gắng hơn nữa đấy」
+「Vâng」
+Bản thân mình cũng nhận thấy rằng mình đang trở nên mạnh mẽ hơn so với trước đây nhờ khóa huấn luyện tuyển chọn này.
+SS là khắc tinh của NLNS—nhưng có lẽ mình nên cảm ơn điều này.
+「Chà...」
+Hít một hơi, tôi lấy máy tính bảng ra.
+Mình phải báo cho Asa-chan biết là mình sắp về.
+「Tachibana... Tôi để ý từ trước rồi, cậu đeo cái móc khóa dễ thương quá nhỉ...?」
+「Hả? À, cái này ạ...?」
+「Một SS mà lại đeo cái này thì có sao không ạ?」
+「Không, không hẳn là vậy...」
+「Ê, Tachibana-kun! Rei-chan!」
+「Giọng này... Wata-chan? Sao lại...?」
+Wata-chan vác cặp và ôm ghế dựa chạy lon ton đến.
+"Hinami"
+「Hai người vừa mới xong huấn luyện đúng không? Hai người vất vả rồi!」
+「Vất vả rồi...」
+「Không phải. Sao cậu vẫn còn ở đây?」
+「Hôm nay Asane-chan nghỉ nên tớ định đợi Tachibana-kun」
+「À, đúng rồi...」
+Hôm nay Asa-chan nghỉ học với lý do tầm thường như sinh viên mới ra trường là "buồn ngủ".
+Bình thường thì tôi sẽ nài nỉ thêm, nhưng từ khi trở thành học viên huấn luyện, ngày nào tôi cũng phải dậy sớm nên không có thời gian để ý đến chuyện đó.
+「Tớ đã xem huấn luyện một chút... Tachibana-kun hôm nay cũng cố gắng nhỉ, giỏi quá」
+「Không, là nhờ bùa hộ mệnh của Wata-chan-senpai đó ạ. Cứ nhìn thấy nó là em lại tràn đầy khí thế」
+「Thật á? Hehe, cậu nói thế tớ vui quá, may mà tớ đã làm nó...」
+「Vậy à... Quả nhiên là Hinami làm mà」
+「Ừm! À, nhắc mới nhớ, như vậy là cả ba người đều có đồ đôi rồi nhỉ」
+「Ba người?」
+「Đấy. Tớ, Rei-chan và Tachibana-kun. Mọi người đều có móc khóa đôi đó?」
+Wata-chan xoay một vòng và khoe cái móc khóa hình sóc gắn trên cặp.
+「...Kudakawa-senpai cũng có cái móc khóa này ạ?」
+「Ừm... Thì, có. Chỉ là bây giờ không có ở đây thôi...」
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Đúng lúc đó, thông báo hiện lên trên cái tablet của tôi.
+「Ồ... tin nhắn của Asa-chan」
+Nghĩ lại thì, mình vẫn chưa liên lạc với em ấy.
+Hôm nay Wata-chan cũng không có ở đây, chắc em ấy buồn lắm đây.
+Nghĩ vậy, tôi mở tin nhắn ra, và chỉ thấy vỏn vẹn một dòng chữ.
+「Em muốn ăn gà rán」
+Em gái tôi đúng là, trốn việc mà còn mặt dày.
+Mà thôi... đằng nào chả phải mua.
+「Là Asa-chan nhắn đúng không? Phải nhanh về với em ấy thôi. Ừm, vậy thì... tạm biệt nha, Rei-chan!」
+「Ừ, tạm biệt. Trời tối rồi, nhớ cẩn thận đấy. Đừng có vì muốn về nhanh mà đi đường tắt kì quặc đó」
+「Vậy em cũng xin phép... Kujikawa-senpai, hôm nay cảm ơn chị đã giúp đỡ」
+Tôi cúi đầu rồi cùng Wata-chan sánh bước đi.
+「Tachibana... đừng có lôi Hinami vào chuyện này」
+Để đưa Wata-chan về nhà, chúng tôi đi trên con đường đã chìm vào màn đêm.
+Ngước nhìn bầu trời đêm mùa hè, những vì sao lấp lánh như thể đây là một hòn đảo vùng quê.
+――Tachibana... đừng có lôi Hinami vào chuyện này.
+Lời của Kujikawa-senpai lúc ra về cứ văng vẳng trong đầu tôi.
+「Tachibana-kun, cậu cau có mặt mày làm gì thế?」
+「Hả... à, mặt em trông vậy hả?」
+Wata-chan gật đầu lia lịa.
+Có vẻ như vô thức, biểu cảm của tôi đã lộ ra ngoài.
+「Sao ta... nghĩ lại thì, em chẳng biết gì về Kujikawa-senpai cả」
+「Wata-chan-senpai quen biết chị ấy lâu rồi đúng không? Nếu được thì kể cho em nghe với?」
+Hội trưởng hội kỷ luật, Kujikawa Rei.
+Trong thời gian ở SS thì là cấp trên, còn đối với NLNS thì không ngoa khi nói là kẻ thù không đội trời chung.
+Dù ở lập trường nào, biết về chị ấy cũng chẳng thiệt.
+「Hai người quen nhau từ khi nào vậy ạ?」
+「À ừm... Rei-chan đến đảo này trước khi thành người lớn 1 năm, vậy là... hừm, ha, ba... 6 năm trước nhỉ」
+「Chờ đã. Vừa nãy chị lỡ mồm tiết lộ thông tin động trời gì đó thì phải...」
+「Kujikawa-senpai chuyển đến đây từ đảo chính ạ...?」
+「Ừ, đúng đó?」
+Chuyện này... quả là một sự thật mới gây sốc.
+6 năm trước... cái tuổi mà cảm xúc và đạo đức đã hình thành đầy đủ rồi chứ.
+Ngay cả khi không phải người lớn khi mới chuyển đến, nếu là người từ đảo Honshu, chắc chắn hòn đảo này phải có vẻ dị thường.
+Vậy mà, không hiểu sao cô ấy có thể hòa nhập với hòn đảo này đến vậy.
+Có lẽ ban đầu cô ấy ít phản kháng, hoặc có lẽ cô ấy cũng dễ dàng bị nuốt chửng bởi áp lực đồng điệu của hòn đảo... đến mức đó thì tôi không biết.
+「Nhưng mà, chuyện này thật đáng kinh ngạc... một người từ đảo Honshu lại có thể trở thành trưởng ban kỷ luật của SS」
+「Ừm, Rei-chan giỏi lắm, lại còn ngoan nữa! Vào SS cũng là vì mọi người trong gia đình mà」
+「Ý cậu là sao?」
+「Ừm, thì là... tớ cũng không biết rõ lắm... hình như Rei-chan không có bố, mẹ thì đang nằm viện」
+「...Vậy ạ」
+「Ừm... với cả, vì còn có em trai và em gái nữa, nên Rei-chan cố gắng ở SS để được nhận nhiều học bổng」
+Nghe những lời đó, tôi lại càng khó xử hơn.
+Sự chỉ đạo triệt để đến mức ấy... thậm chí có thể nói là thái quá, có lẽ cũng xuất phát từ tinh thần trách nhiệm đó.
+Giả sử.
+Nếu, chỉ là nếu thôi nhé.
+Nếu chúng ta dẹp bỏ điều lệ đó... thì chuyện gì sẽ xảy ra với Judagawa-senpai?
+Việc tôi đang làm, chẳng phải là hủy hoại cuộc sống của cô ấy sao――――
+「Tachibana-kun? Cậu lại đang cau có mặt mày đấy à?」
+「À, không...」
+Tôi không phải là thành viên SS. Tôi là thủ lĩnh của NLNS.
+Tôi mà lại phải lo lắng về chuyện này sao?
+Hãy bình tĩnh và suy nghĩ lại đi. Cái điều lệ dâm đãng đó là điều lệ khuyến khích tình dục vô độ.
+Chừng nào còn điều lệ này, chừng đó Wata-chan và Asa-chan... thậm chí cả những người bạn của tôi, sẽ phải chịu đựng mối đe dọa của tình dục vô độ.
+Chính vì không thể tha thứ cho điều đó, tôi mới tổ chức NLNS.
+Việc phá hủy hòn đảo này một lần, tôi đã chuẩn bị sẵn tinh thần từ đầu rồi.
+Đến nước này rồi, không thể dừng lại được nữa.
+「Nếu có chuyện gì lo lắng, cậu có thể tâm sự với tớ đấy! Tiền bối của Tachibana-kun sẽ trả lời mọi thứ cho cậu!」
+「Wata-chan...」
+Sự tươi sáng vô bờ bến đó, giờ thật đáng quý.
+「Vậy thì... dạo gần đây máy tính của em cứ chậm rì rì, phải làm sao ạ?」
+「Ể...? À, hiểu, hiểu mà... Những lúc như thế này thì... hay là, cùng nhau vận động, giảm cân thì có lẽ sẽ ổn hơn đó...?」
+「Hứ...!」
+「Thấy chưa, lại cười! Sao toàn hỏi mấy chuyện triết học vậy! Em không biết! Tachibana-kun xấu tính quá đi!」
+「Chẳng phải là do cậu tự nói ra còn gì」
+「Thì em có nói...！ Đúng là em có nói... nhưng mà em có bao giờ cân thử cân nặng của máy tính đâu... Em không biết mà...」
+Wata-chan xị mặt xuống, bắt đầu lạch cạch đóng mở cái ghế xếp.
+Sao vị senpai này đến cả cái kiểu dỗi hờn cũng đáng yêu đến thế không biết.
+「Em xin lỗi, em sai rồi」
+「Nhưng mà, nhờ có Wata-chan mà em thấy khỏe hơn đó」
+「Ừm...? Thật á? Nhờ có em á?」
+「Vâng... Em vừa mới tập luyện mệt muốn chết mà giờ tự nhiên tràn đầy sức lực――」
+「Hay là, Wata-chan-senpai là thiên tài tạo động lực!?」
+「T... thiên tài...! Có lẽ vậy, Tachibana-kun giỏi nịnh mà... Nhưng mà em cũng thấy vui vui... ehehehe」
+「Giờ thì... em cũng được Wata-chan tiếp thêm động lực rồi――」
+「Vì mục đích của chúng ta, em sẽ cố gắng để được senpai Tadashikawa tin tưởng」
+「Ừm! Cố lên Tachibana-kun, em ủng hộ anh!」
+「...Ơ? Mà khoan, em là Wata-chan mà... Sao Rei-chan lại là senpai Tadashikawa...?」
+「Thì... Wata-chan loli mà」
+「Chị không phải loli nhaaa!!」
