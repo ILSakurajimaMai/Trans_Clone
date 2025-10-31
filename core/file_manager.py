@@ -443,3 +443,112 @@ class OptimizedFileManager:
         """Cleanup resources"""
         if self.executor:
             self.executor.shutdown(wait=True)
+
+    # Synchronous wrapper methods for backward compatibility
+    def set_input_directory(self, directory: str) -> bool:
+        """
+        Synchronous wrapper for set_input_directory_async
+
+        Args:
+            directory: Input directory path
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            # Run async method in sync context
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            result = loop.run_until_complete(self.set_input_directory_async(directory))
+            loop.close()
+            return result.success
+        except Exception as e:
+            self.logger.error(f"Error setting input directory: {e}")
+            return False
+
+    def set_output_directory(self, directory: str) -> bool:
+        """
+        Set output directory (synchronous)
+
+        Args:
+            directory: Output directory path
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            if not directory:
+                return False
+
+            # Create directory if it doesn't exist
+            Path(directory).mkdir(parents=True, exist_ok=True)
+            self.output_directory = directory
+            return True
+        except Exception as e:
+            self.logger.error(f"Error setting output directory: {e}")
+            return False
+
+    def load_csv_files(self, directory: str) -> List[str]:
+        """
+        Load CSV files from directory (synchronous)
+
+        Args:
+            directory: Directory to search for CSV files
+
+        Returns:
+            List of CSV file paths
+        """
+        try:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            result = loop.run_until_complete(self.set_input_directory_async(directory))
+            loop.close()
+            return self.csv_files if result.success else []
+        except Exception as e:
+            self.logger.error(f"Error loading CSV files: {e}")
+            return []
+
+    def load_file(self, file_path: str) -> Optional[pd.DataFrame]:
+        """
+        Load a single CSV file (synchronous)
+
+        Args:
+            file_path: Path to CSV file
+
+        Returns:
+            DataFrame if successful, None otherwise
+        """
+        try:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            result = loop.run_until_complete(self.load_file_async(file_path))
+            loop.close()
+
+            if result.success and result.data is not None:
+                self.current_dataframe = result.data
+                return result.data
+            return None
+        except Exception as e:
+            self.logger.error(f"Error loading file: {e}")
+            return None
+
+    def save_file(self, file_path: str, dataframe: pd.DataFrame) -> bool:
+        """
+        Save DataFrame to CSV file (synchronous)
+
+        Args:
+            file_path: Path to save file
+            dataframe: DataFrame to save
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            result = loop.run_until_complete(self.save_file_async(file_path, dataframe))
+            loop.close()
+            return result.success
+        except Exception as e:
+            self.logger.error(f"Error saving file: {e}")
+            return False
