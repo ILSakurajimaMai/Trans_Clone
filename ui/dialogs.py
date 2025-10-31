@@ -411,3 +411,160 @@ class HistoryViewDialog(QDialog):
         QMessageBox.information(
             self, "Export", "History export functionality coming soon!"
         )
+
+
+class ContextFileSelectionDialog(QDialog):
+    """Dialog để chọn files cho context"""
+
+    def __init__(self, parent=None, available_files: list = None):
+        super().__init__(parent)
+        self.setWindowTitle("Select Context Files")
+        self.setMinimumSize(600, 500)
+        self.available_files = available_files or []
+        self.setup_ui()
+
+    def setup_ui(self):
+        """Setup UI"""
+        layout = QVBoxLayout(self)
+
+        # Instructions
+        info_label = QLabel(
+            "Select CSV files to use as context. The AI will use translations "
+            "from these files to understand the context better."
+        )
+        info_label.setWordWrap(True)
+        layout.addWidget(info_label)
+
+        # File selection
+        files_group = QGroupBox("Available Files")
+        files_layout = QVBoxLayout()
+
+        self.file_list = QListWidget()
+        self.file_list.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
+
+        # Load available files from parent's app state
+        self.load_available_files()
+
+        files_layout.addWidget(self.file_list)
+
+        # Quick selection buttons
+        quick_btn_layout = QHBoxLayout()
+
+        select_all_btn = QPushButton("Select All")
+        select_all_btn.clicked.connect(self.select_all)
+
+        deselect_all_btn = QPushButton("Deselect All")
+        deselect_all_btn.clicked.connect(self.deselect_all)
+
+        quick_btn_layout.addWidget(select_all_btn)
+        quick_btn_layout.addWidget(deselect_all_btn)
+        quick_btn_layout.addStretch()
+
+        files_layout.addLayout(quick_btn_layout)
+        files_group.setLayout(files_layout)
+        layout.addWidget(files_group)
+
+        # Context configuration
+        config_group = QGroupBox("Context Configuration")
+        config_layout = QFormLayout()
+
+        self.source_column_combo = QComboBox()
+        self.source_column_combo.addItems(["original text", "Original Text", "Text"])
+        self.source_column_combo.setEditable(True)
+
+        self.translation_column_combo = QComboBox()
+        self.translation_column_combo.addItems(["Initial", "Machine translation", "Translation"])
+        self.translation_column_combo.setEditable(True)
+
+        self.chunk_size_spin = QSpinBox()
+        self.chunk_size_spin.setRange(10, 500)
+        self.chunk_size_spin.setValue(50)
+
+        self.max_chunks_spin = QSpinBox()
+        self.max_chunks_spin.setRange(1, 50)
+        self.max_chunks_spin.setValue(10)
+
+        self.only_translated_check = QCheckBox("Only include rows with translations")
+        self.only_translated_check.setChecked(True)
+
+        config_layout.addRow("Source Column:", self.source_column_combo)
+        config_layout.addRow("Translation Column:", self.translation_column_combo)
+        config_layout.addRow("Chunk Size:", self.chunk_size_spin)
+        config_layout.addRow("Max Context Chunks:", self.max_chunks_spin)
+        config_layout.addRow("", self.only_translated_check)
+
+        config_group.setLayout(config_layout)
+        layout.addWidget(config_group)
+
+        # Buttons
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+
+        ok_btn = QPushButton("OK")
+        ok_btn.clicked.connect(self.accept)
+        ok_btn.setDefault(True)
+
+        cancel_btn = QPushButton("Cancel")
+        cancel_btn.clicked.connect(self.reject)
+
+        button_layout.addWidget(ok_btn)
+        button_layout.addWidget(cancel_btn)
+
+        layout.addLayout(button_layout)
+
+    def load_available_files(self):
+        """Load available files from parent window"""
+        self.file_list.clear()
+
+        # Try to get files from parent's app state
+        parent_window = self.window()
+        if hasattr(parent_window, 'app_state') and parent_window.app_state.csv_files:
+            files = parent_window.app_state.csv_files
+            for file_path in files:
+                from pathlib import Path
+                file_name = Path(file_path).name if hasattr(file_path, '__fspath__') or isinstance(file_path, str) else str(file_path)
+                item = QListWidgetItem(file_name)
+                item.setData(Qt.ItemDataRole.UserRole, str(file_path))
+                self.file_list.addItem(item)
+        elif self.available_files:
+            # Use provided files
+            for file_path in self.available_files:
+                from pathlib import Path
+                file_name = Path(file_path).name
+                item = QListWidgetItem(file_name)
+                item.setData(Qt.ItemDataRole.UserRole, str(file_path))
+                self.file_list.addItem(item)
+        else:
+            # No files available
+            item = QListWidgetItem("No files available")
+            item.setFlags(Qt.ItemFlag.NoItemFlags)
+            self.file_list.addItem(item)
+
+    def select_all(self):
+        """Select all files"""
+        for i in range(self.file_list.count()):
+            item = self.file_list.item(i)
+            if item.flags() & Qt.ItemFlag.ItemIsSelectable:
+                item.setSelected(True)
+
+    def deselect_all(self):
+        """Deselect all files"""
+        self.file_list.clearSelection()
+
+    def get_selection(self):
+        """Get selected files and configuration"""
+        selected_files = []
+        for item in self.file_list.selectedItems():
+            file_path = item.data(Qt.ItemDataRole.UserRole)
+            if file_path:
+                selected_files.append(file_path)
+
+        config = {
+            'source_column': self.source_column_combo.currentText(),
+            'translation_column': self.translation_column_combo.currentText(),
+            'chunk_size': self.chunk_size_spin.value(),
+            'max_context_chunks': self.max_chunks_spin.value(),
+            'only_translated_rows': self.only_translated_check.isChecked()
+        }
+
+        return selected_files, config

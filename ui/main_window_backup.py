@@ -27,7 +27,6 @@ from PyQt6.QtWidgets import (
     QDialog,
     QPushButton,
     QFrame,
-    QTabWidget,
 )
 from PyQt6.QtGui import QAction, QKeySequence, QIcon
 from PyQt6.QtCore import Qt, QModelIndex, pyqtSignal, QTimer
@@ -121,41 +120,6 @@ class CSVTranslatorMainWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
-        main_layout.setContentsMargins(5, 5, 5, 5)
-
-        # Create tab widget for main interface
-        self.tab_widget = QTabWidget()
-        main_layout.addWidget(self.tab_widget)
-
-        # Tab 1: Main workspace
-        self.main_tab = QWidget()
-        self.setup_main_tab()
-        self.tab_widget.addTab(self.main_tab, "📄 Main Workspace")
-
-        # Tab 2: API Configuration
-        from ui.components.api_config_panel import APIConfigPanel
-        self.api_config_panel = APIConfigPanel()
-        self.api_config_panel.api_key_changed.connect(self.on_api_key_configured)
-        self.tab_widget.addTab(self.api_config_panel, "🔑 API Configuration")
-
-        # Tab 3: System Instructions
-        from ui.components.instruction_panel import InstructionPanel
-        self.instruction_panel = InstructionPanel()
-        self.instruction_panel.instruction_changed.connect(self.on_instruction_changed)
-        self.tab_widget.addTab(self.instruction_panel, "📝 Instructions")
-
-        # Tab 4: Summary
-        from ui.components.summary_panel import SummaryPanel
-        self.summary_panel = SummaryPanel()
-        self.summary_panel.summary_requested.connect(self.on_summary_requested)
-        self.tab_widget.addTab(self.summary_panel, "📊 Summary")
-
-        # Setup menu bar after all components are created
-        self.setup_menu_bar()
-
-    def setup_main_tab(self):
-        """Setup main workspace tab"""
-        main_layout = QVBoxLayout(self.main_tab)
         main_layout.setContentsMargins(5, 5, 5, 5)
 
         # Settings panel with toggle button
@@ -258,6 +222,9 @@ class CSVTranslatorMainWindow(QMainWindow):
 
         # Set splitter proportions - give more space to table
         splitter.setSizes([700, 150])
+
+        # Setup menu bar after all components are created
+        self.setup_menu_bar()
 
     def setup_menu_bar(self):
         """Setup the menu bar"""
@@ -410,28 +377,28 @@ class CSVTranslatorMainWindow(QMainWindow):
             self.addAction(action)
 
     def setup_api_keys(self):
-        """Setup API keys - now handled by API config panel"""
-        # Load API keys from API service manager if available
-        if hasattr(self, 'api_config_panel'):
-            api_manager = self.api_config_panel.get_api_manager()
+        """Setup API keys dialog"""
+        dialog = APIKeyDialog(self)
+        dialog.set_api_keys(self.app_state.api_keys)
 
-            # Get all services with API keys
-            for service in api_manager.get_all_services():
-                if api_manager.has_api_key(service.id):
-                    api_key = api_manager.get_api_key(service.id)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            api_keys = dialog.get_api_keys()
+            if api_keys:
+                self.app_state.api_keys.update(api_keys)
 
-                    # Set in translation engine (map to provider)
-                    if service.provider_type.value in [p.value for p in ModelProvider]:
-                        provider = ModelProvider(service.provider_type.value)
-                        self.translation_engine.set_api_key(provider, api_key)
+                # Configure translation engine
+                for provider_str, api_key in api_keys.items():
+                    provider = ModelProvider(provider_str)
+                    self.translation_engine.set_api_key(provider, api_key)
 
-                        # Store in app state
-                        self.app_state.api_keys[provider.value] = api_key
-
-            if self.app_state.api_keys:
-                self.log(f"Loaded {len(self.app_state.api_keys)} API key(s)")
+                self.log("API keys configured successfully")
             else:
-                self.log("No API keys configured. Go to API Configuration tab to set up.")
+                self.log("No API keys provided - translation features disabled")
+                QMessageBox.warning(
+                    self,
+                    "Warning",
+                    "No API keys were provided. Translation features will be disabled.",
+                )
 
     def setup_storage_managers(self):
         """Setup storage managers and connections"""
@@ -1530,32 +1497,15 @@ class CSVTranslatorMainWindow(QMainWindow):
 
         context_menu = QMenu(self)
 
-        # Translation submenu (if rows are selected)
-        has_selection = bool(self.table_view.selectedIndexes())
-        if has_selection:
-            translate_menu = context_menu.addMenu("🌐 Translate Selected Rows")
-
-            translate_no_context_action = translate_menu.addAction("Without Context")
-            translate_no_context_action.triggered.connect(
-                lambda: self.translate_selected_rows(use_context=False)
-            )
-
-            translate_with_context_action = translate_menu.addAction("With Context...")
-            translate_with_context_action.triggered.connect(
-                lambda: self.translate_selected_rows(use_context=True)
-            )
-
-            context_menu.addSeparator()
-
         # Copy action
         copy_action = context_menu.addAction("Copy")
         copy_action.triggered.connect(self.copy_selected)
-        copy_action.setEnabled(has_selection)
+        copy_action.setEnabled(bool(self.table_view.selectedIndexes()))
 
         # Cut action
         cut_action = context_menu.addAction("Cut")
         cut_action.triggered.connect(self.cut_selected)
-        cut_action.setEnabled(has_selection)
+        cut_action.setEnabled(bool(self.table_view.selectedIndexes()))
 
         # Paste action
         paste_action = context_menu.addAction("Paste")
@@ -1564,7 +1514,7 @@ class CSVTranslatorMainWindow(QMainWindow):
         # Delete action
         delete_action = context_menu.addAction("Delete")
         delete_action.triggered.connect(self.delete_selected)
-        delete_action.setEnabled(has_selection)
+        delete_action.setEnabled(bool(self.table_view.selectedIndexes()))
 
         context_menu.addSeparator()
 
@@ -1729,90 +1679,6 @@ class CSVTranslatorMainWindow(QMainWindow):
         prefs.set("recent_projects", [])
         self.update_recent_projects_menu()
         self.log("Recent projects list cleared")
-
-    def on_api_key_configured(self, service_id: str, api_key: str):
-        """Handle API key configuration from API config panel"""
-        # Get service info
-        api_manager = self.api_config_panel.get_api_manager()
-        service = api_manager.get_service(service_id)
-
-        if service:
-            # Set in translation engine
-            if service.provider_type.value in [p.value for p in ModelProvider]:
-                provider = ModelProvider(service.provider_type.value)
-                self.translation_engine.set_api_key(provider, api_key)
-                self.app_state.api_keys[provider.value] = api_key
-
-            self.log(f"API key configured for {service.name}")
-
-    def on_instruction_changed(self, instruction_type: str, content: str):
-        """Handle system instruction changes"""
-        if instruction_type == "translation":
-            self.app_state.translation_instruction = content
-            self.log("Translation instruction updated")
-        elif instruction_type == "summary":
-            self.app_state.summary_instruction = content
-            self.log("Summary instruction updated")
-
-    def on_summary_requested(self, system_instruction: str, context_files: list, config: dict):
-        """Handle summary request from summary panel"""
-        self.log("Starting summary generation...")
-
-        # TODO: Implement actual summary generation using API
-        # For now, show placeholder
-        QMessageBox.information(
-            self,
-            "Summary",
-            f"Summary generation requested.\n\n"
-            f"System instruction: {len(system_instruction)} chars\n"
-            f"Context files: {len(context_files)}\n"
-            f"This feature will be implemented next."
-        )
-
-    def translate_selected_rows(self, use_context: bool):
-        """Translate selected rows with optional context"""
-        selected_indexes = self.table_view.selectionModel().selectedIndexes()
-
-        if not selected_indexes:
-            QMessageBox.warning(self, "Warning", "No rows selected.")
-            return
-
-        # Get unique selected rows
-        selected_rows = sorted(set(index.row() for index in selected_indexes))
-
-        self.log(f"Translating {len(selected_rows)} selected rows (context: {use_context})...")
-
-        if use_context:
-            # Show context file selection dialog
-            from ui.dialogs import ContextFileSelectionDialog
-
-            dialog = ContextFileSelectionDialog(self)
-            if dialog.exec() == QDialog.DialogCode.Accepted:
-                context_files, context_config = dialog.get_selection()
-
-                if not context_files:
-                    QMessageBox.warning(self, "Warning", "No context files selected.")
-                    return
-
-                # TODO: Implement translation with context
-                self.log(f"Will translate with context from {len(context_files)} files")
-                QMessageBox.information(
-                    self,
-                    "Translation",
-                    f"Translation with context will be implemented.\n\n"
-                    f"Selected rows: {len(selected_rows)}\n"
-                    f"Context files: {len(context_files)}"
-                )
-        else:
-            # Translate without context
-            # TODO: Implement translation without context
-            self.log(f"Translating {len(selected_rows)} rows without context")
-            QMessageBox.information(
-                self,
-                "Translation",
-                f"Translation without context will be implemented.\n\n"
-                f"Selected rows: {len(selected_rows)}"
-            )
 
     def log(self, message: str):
         """Add message to status log"""
